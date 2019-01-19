@@ -14,6 +14,8 @@
         <Border Grid.Row="1" Grid.RowSpan="2" MinHeight="320" />
         <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
                  TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
+        <Button x:Name="EnterButton" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+                Content="Enter" Click="EnterButton_Click"/>
         <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
     </Grid>
 </Window>

@@ -8,12 +8,13 @@ namespace Walterlv.CloudTyping
     {
         private CloudKeyboard _keyboard;
         private readonly DelayRunner _runner;
+        private bool _isEntered;
 
         public MainWindow()
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
-            _runner = new DelayRunner(TimeSpan.FromSeconds(0.5), Send);
+            _runner = new DelayRunner(TimeSpan.FromSeconds(0.1), Send);
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -26,14 +27,20 @@ namespace Walterlv.CloudTyping
             _runner.Run();
         }
 
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            _isEntered = true;
+        }
+
         private async void Send()
         {
             await await TypingTextBox.Dispatcher.InvokeAsync(async () =>
             {
                 try
                 {
-                    await _keyboard.SetTextAsync(TypingTextBox.Text,
-                        TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
+                    await _keyboard.SetTextAsync(TypingTextBox.Text, TypingTextBox.SelectionStart,
+                        TypingTextBox.SelectionStart + TypingTextBox.SelectionLength, _isEntered);
+                    _isEntered = false;
                 }
                 catch (Exception ex)
                 {

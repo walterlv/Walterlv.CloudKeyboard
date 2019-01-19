@@ -55,7 +55,7 @@ namespace Walterlv.CloudTyping.Controllers
         {
             if (TypingTextRepo.TryGetValue(token, out var queue))
             {
-                if (queue.TryPeek(out var value) && value.Enter)
+                if (queue.TryPeek(out var value) && value.Enter && queue.Count > 1)
                 {
                     queue.TryDequeue(out _);
                 }
