@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.csproj", "{742034B7-B944-4BBB-AEEB-117D9024FAC2}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Debug|iPhone.Build.0 = Debug|iPhone
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Release|iPhone.ActiveCfg = Release|iPhone
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Release|iPhone.Build.0 = Release|iPhone
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{742034B7-B944-4BBB-AEEB-117D9024FAC2}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
