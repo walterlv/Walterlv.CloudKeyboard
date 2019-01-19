@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeybaord.Cli"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Windows", "Walterlv.CloudKeyboard.Windows\Walterlv.CloudKeyboard.Windows.csproj", "{9A511A00-B27F-42FC-B398-5ABE4D60C2E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Wpf", "Walterlv.CloudKeyboard.Wpf\Walterlv.CloudKeyboard.Wpf.csproj", "{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,34 @@ Global
 		{9A511A00-B27F-42FC-B398-5ABE4D60C2E1}.Release|x86.ActiveCfg = Release|x86
 		{9A511A00-B27F-42FC-B398-5ABE4D60C2E1}.Release|x86.Build.0 = Release|x86
 		{9A511A00-B27F-42FC-B398-5ABE4D60C2E1}.Release|x86.Deploy.0 = Release|x86
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|x64.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Debug|x86.Build.0 = Debug|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|ARM.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|ARM64.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|iPhone.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|x64.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|x64.Build.0 = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|x86.ActiveCfg = Release|Any CPU
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

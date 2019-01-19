@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Walterlv.CloudTyping
 {
-    public sealed partial class MainPage : Page
+    public partial class MainWindow : Window
     {
         private CloudKeyboard _keyboard;
 
-        public MainPage()
+        public MainWindow()
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
@@ -30,10 +28,8 @@ namespace Walterlv.CloudTyping
         {
             try
             {
-                //await _keyboard.SetTextAsync(TypingTextBox.Text,
-                //    TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
-
-                var typingText = await _keyboard.GetTextAsync();
+                await _keyboard.SetTextAsync(TypingTextBox.Text,
+                    TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
             }
             catch (Exception ex)
             {
