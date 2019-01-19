@@ -4,26 +4,20 @@ namespace Walterlv.CloudTyping
 {
     public readonly struct TypingText
     {
-        public TypingText(string text)
+        public TypingText(string text) : this(text, text?.Length ?? 0, text?.Length ?? 0)
         {
-            Text = text ?? "";
-            CaretStartIndex = Text.Length;
-            CaretEndIndex = CaretStartIndex;
         }
 
-        public TypingText(string text, int caretIndex)
+        public TypingText(string text, int caretIndex) : this(text, caretIndex, caretIndex)
         {
-            Text = text ?? "";
-            CaretStartIndex = caretIndex;
-            CaretEndIndex = caretIndex;
         }
 
         [JsonConstructor]
         public TypingText(string text, int caretStartIndex, int caretEndIndex)
         {
-            Text = text;
-            CaretStartIndex = caretStartIndex;
-            CaretEndIndex = caretEndIndex;
+            Text = text ?? "";
+            CaretStartIndex = caretStartIndex < 0 || caretStartIndex > text.Length ? text.Length : caretStartIndex;
+            CaretEndIndex = caretEndIndex < 0 || caretEndIndex > text.Length ? text.Length : caretEndIndex;
         }
 
         public string Text { get; }

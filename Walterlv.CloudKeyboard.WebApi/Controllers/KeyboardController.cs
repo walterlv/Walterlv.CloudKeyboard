@@ -31,15 +31,17 @@ namespace Walterlv.CloudTyping.Controllers
 
         // POST api/keyboard
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<TypingResponse> Put([FromBody] string value)
         {
+            return Put("0", value);
         }
 
         // PUT api/keyboard/5
         [HttpPut("{token}")]
-        public void Put(string token, [FromBody] string value)
+        public ActionResult<TypingResponse> Put(string token, [FromBody] string value)
         {
             TypingTextRepo[token] = value;
+            return new TypingResponse(true);
         }
 
         // DELETE api/keyboard/5
