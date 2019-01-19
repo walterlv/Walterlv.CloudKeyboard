@@ -4,20 +4,13 @@ namespace Walterlv.CloudTyping
 {
     public readonly struct TypingText
     {
-        public TypingText(string text) : this(text, text?.Length ?? 0, text?.Length ?? 0)
-        {
-        }
-
-        public TypingText(string text, int caretIndex) : this(text, caretIndex, caretIndex)
-        {
-        }
-
         [JsonConstructor]
-        public TypingText(string text, int caretStartIndex, int caretEndIndex)
+        public TypingText(string text, int caretStartIndex = -1, int caretEndIndex = -1, bool enter = false)
         {
             Text = text ?? "";
             CaretStartIndex = caretStartIndex < 0 || caretStartIndex > text.Length ? text.Length : caretStartIndex;
             CaretEndIndex = caretEndIndex < 0 || caretEndIndex > text.Length ? text.Length : caretEndIndex;
+            Enter = enter;
         }
 
         public string Text { get; }
@@ -25,5 +18,7 @@ namespace Walterlv.CloudTyping
         public int CaretStartIndex { get; }
 
         public int CaretEndIndex { get; }
+
+        public bool Enter { get; }
     }
 }
