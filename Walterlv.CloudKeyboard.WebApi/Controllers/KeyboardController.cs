@@ -11,7 +11,7 @@ namespace Walterlv.CloudTyping.Controllers
         private static readonly ConcurrentDictionary<string, string> TypingTextRepo
             = new ConcurrentDictionary<string, string>(new Dictionary<string, string>
             {
-                {"0", "Test for 0"},
+                {"0", "Welcome to use walterlv's cloud keyboard."},
             });
 
         // GET api/keyboard
