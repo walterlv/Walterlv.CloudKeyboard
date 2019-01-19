@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Walterlv.CloudTyping.Controllers
@@ -7,18 +8,25 @@ namespace Walterlv.CloudTyping.Controllers
     [ApiController]
     public class KeyboardController : ControllerBase
     {
+        private static readonly ConcurrentDictionary<string, string> TypingTextRepo
+            = new ConcurrentDictionary<string, string>(new Dictionary<string, string>
+            {
+                {"0", "Test for 0"},
+            });
+
         // GET api/keyboard
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<TypingText> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Get("0");
         }
 
         // GET api/keyboard/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("{token}")]
+        public ActionResult<TypingText> Get(string token)
         {
-            return "value";
+            TypingTextRepo.TryGetValue(token, out var value);
+            return new TypingText(value);
         }
 
         // POST api/keyboard
@@ -28,15 +36,17 @@ namespace Walterlv.CloudTyping.Controllers
         }
 
         // PUT api/keyboard/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{token}")]
+        public void Put(string token, [FromBody] string value)
         {
+            TypingTextRepo[token] = value;
         }
 
         // DELETE api/keyboard/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{token}")]
+        public void Delete(string token)
         {
+            TypingTextRepo.TryRemove(token, out _);
         }
     }
 }
