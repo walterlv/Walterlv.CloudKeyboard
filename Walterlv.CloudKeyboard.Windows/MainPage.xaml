@@ -8,6 +8,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBox x:Name="TypingTextBox" TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.RowSpan="2" MinHeight="320" />
+        <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
+                 TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
+        <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
     </Grid>
 </Page>

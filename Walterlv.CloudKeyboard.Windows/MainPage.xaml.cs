@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Walterlv.CloudTyping
@@ -13,16 +14,28 @@ namespace Walterlv.CloudTyping
             _keyboard = new CloudKeyboard("0");
         }
 
-        private async void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            await _keyboard.SetTextAsync(TypingTextBox.Text,
-                TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
+            Send();
         }
 
-        private async void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            await _keyboard.SetTextAsync(TypingTextBox.Text,
-                TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
+            Send();
+        }
+
+        private async void Send()
+        {
+            try
+            {
+                await _keyboard.SetTextAsync(TypingTextBox.Text,
+                    TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
+            }
+            catch (Exception ex)
+            {
+                ErrorTipTextBlock.Visibility = Visibility;
+                ErrorTipTextBlock.Text = ex.ToString();
+            }
         }
     }
 }
