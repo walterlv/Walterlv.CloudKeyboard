@@ -31,7 +31,7 @@ namespace Walterlv.CloudTyping
             var reader = new ConsoleLineReader();
             reader.TextChanged += async (sender, args) =>
             {
-                await keyboard.SetTextAsync(args.Line);
+                await keyboard.SetTextAsync(args.Line, args.Line.Length - 1, args.Line.Length);
             };
 
             while (true)
@@ -48,7 +48,6 @@ namespace Walterlv.CloudTyping
 
             while (true)
             {
-                var text = (await keyboard.GetTextAsync()).Text;
                 Console.CursorTop = 1;
                 Console.CursorLeft = 0;
                 for (var i = 0; i < 320; i++)
@@ -58,7 +57,34 @@ namespace Walterlv.CloudTyping
 
                 Console.CursorTop = 1;
                 Console.CursorLeft = 0;
-                Console.Write(text);
+
+                var typing = await keyboard.GetTextAsync();
+                if (typing.Enter)
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("[上屏] ");
+                    Console.Write(typing.Text);
+                    Console.ResetColor();
+                    Console.WriteLine();
+                }
+                else
+                {
+                    for (var i = 0; i < typing.Text.Length; i++)
+                    {
+                        var c = typing.Text[i];
+                        if (typing.CaretStartIndex <= i && typing.CaretEndIndex > i)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(c);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.Write(c);
+                        }
+                    }
+                }
+
                 await Task.Delay(1000);
             }
         }

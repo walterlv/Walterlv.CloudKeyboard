@@ -20,7 +20,7 @@ namespace Walterlv.CloudTyping
         {
             // 发送请求。
             var client = new HttpClient();
-            var content = new StringContent("", Encoding.UTF8, "text");
+            var content = new StringContent("", Encoding.UTF8, "application/json");
             var response = await (await client.PostAsync(_url, content).ConfigureAwait(false))
                 .Content.ReadAsStringAsync().ConfigureAwait(false);
 
