@@ -49,5 +49,18 @@ namespace Walterlv.CloudTyping
                 }
             });
         }
+
+        private async void OnActivated(object sender, EventArgs e)
+        {
+            var text = await _keyboard.GetTextAsync();
+            if (!text.Enter)
+            {
+                TypingTextBox.Text = text.Text;
+                var selectionStart = Math.Min(text.CaretStartIndex, text.CaretEndIndex);
+                var selectionEnd = Math.Max(text.CaretStartIndex, text.CaretEndIndex);
+                TypingTextBox.SelectionStart = selectionStart;
+                TypingTextBox.SelectionLength = selectionEnd - selectionStart;
+            }
+        }
     }
 }
