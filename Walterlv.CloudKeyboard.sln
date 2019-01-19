@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Core", "Walterlv.CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj", "{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.WebApi", "Walterlv.CloudKeyboard.WebApi\Walterlv.CloudKeyboard.WebApi.csproj", "{F970BED6-96C9-42BB-A3F6-C141FD9EA715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1}.Release|iPhone.Build.0 = Release|Any CPU
 		{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|iPhone.Build.0 = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
