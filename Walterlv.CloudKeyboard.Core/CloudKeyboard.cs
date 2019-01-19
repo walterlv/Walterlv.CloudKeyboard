@@ -28,10 +28,11 @@ namespace Walterlv.CloudTyping
             return result;
         }
 
-        public async Task<TypingResponse> PutText(string text, int caretStartIndex = -1, int caretEndIndex = -1)
+        public async Task<TypingResponse> PutText(string text,
+            int caretStartIndex = -1, int caretEndIndex = -1, bool enter = false)
         {
             // 准备数据。
-            var typingText = JsonConvert.SerializeObject(new TypingText(text, caretStartIndex, caretEndIndex));
+            var typingText = JsonConvert.SerializeObject(new TypingText(text, caretStartIndex, caretEndIndex, enter));
 
             // 发送请求。
             var client = new HttpClient();
