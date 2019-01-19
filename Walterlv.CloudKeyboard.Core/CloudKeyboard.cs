@@ -46,7 +46,7 @@ namespace Walterlv.CloudTyping
             return result;
         }
 
-        private const string BaseUrl = "https://172.18.134.14:44372/api/keyboard";
+        private const string BaseUrl = "http://localhost:65129/api/keyboard";
         private readonly string _url;
     }
 }

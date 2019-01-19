@@ -12,7 +12,7 @@ namespace Walterlv.CloudTyping
             var strings = Process.GetProcesses().Select(x => x.MainWindowTitle)
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Where(x => x.StartsWith("Walterlv Cloud Keyboard")).ToArray();
-            if (strings.Length >= 1)
+            if (true)
             {
                 RunAsMobileEnd().Wait();
             }
