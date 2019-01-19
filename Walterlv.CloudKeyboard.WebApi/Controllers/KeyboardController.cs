@@ -31,16 +31,16 @@ namespace Walterlv.CloudTyping.Controllers
 
         // POST api/keyboard
         [HttpPost]
-        public ActionResult<TypingResponse> Put([FromBody] string value)
+        public ActionResult<TypingResponse> Put([FromBody] TypingText value)
         {
             return Put("0", value);
         }
 
         // PUT api/keyboard/5
         [HttpPut("{token}")]
-        public ActionResult<TypingResponse> Put(string token, [FromBody] string value)
+        public ActionResult<TypingResponse> Put(string token, [FromBody] TypingText value)
         {
-            TypingTextRepo[token] = value;
+            TypingTextRepo[token] = value.Text ?? "";
             return new TypingResponse(true);
         }
 
