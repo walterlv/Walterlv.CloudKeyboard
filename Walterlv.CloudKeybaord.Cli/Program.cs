@@ -22,16 +22,21 @@ namespace Walterlv.CloudTyping
             }
         }
 
-        private static async Task RunAsPcEnd()
+        private static Task RunAsPcEnd()
         {
             Console.Title = "Walterlv Cloud Keyboard - PC";
             var token = ReadSingleLineText("Input a token: ");
+
             var keyboard = new CloudKeyboard(token);
+            var reader = new ConsoleLineReader();
+            reader.TextChanged += async (sender, args) =>
+            {
+                await keyboard.PutText(args.Line);
+            };
 
             while (true)
             {
-                var line = Console.ReadLine();
-                await keyboard.PutText(line);
+                reader.ReadLine();
             }
         }
 
