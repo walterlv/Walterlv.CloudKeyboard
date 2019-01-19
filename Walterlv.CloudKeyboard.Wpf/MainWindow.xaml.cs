@@ -7,35 +7,40 @@ namespace Walterlv.CloudTyping
     public partial class MainWindow : Window
     {
         private CloudKeyboard _keyboard;
+        private readonly DelayRunner _runner;
 
         public MainWindow()
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
+            _runner = new DelayRunner(TimeSpan.FromSeconds(0.5), Send);
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Send();
+            _runner.Run();
         }
 
         private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            Send();
+            _runner.Run();
         }
 
         private async void Send()
         {
-            try
+            await await TypingTextBox.Dispatcher.InvokeAsync(async () =>
             {
-                await _keyboard.SetTextAsync(TypingTextBox.Text,
-                    TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
-            }
-            catch (Exception ex)
-            {
-                ErrorTipTextBlock.Visibility = Visibility;
-                ErrorTipTextBlock.Text = ex.ToString();
-            }
+                try
+                {
+                    await _keyboard.SetTextAsync(TypingTextBox.Text,
+                        TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
+                }
+                catch (Exception ex)
+                {
+                    ErrorTipTextBlock.Visibility = Visibility;
+                    ErrorTipTextBlock.Text = ex.ToString();
+                }
+            });
         }
     }
 }
