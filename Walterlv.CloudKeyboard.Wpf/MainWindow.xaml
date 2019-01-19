@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Activated="OnActivated">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -16,7 +15,7 @@
         <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
                  TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
         <Button x:Name="EnterButton" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
-                Content="Enter" Click="EnterButton_Click"/>
+                Content="Enter" Click="EnterButton_Click" IsDefault="True" />
         <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
     </Grid>
 </Window>

@@ -30,6 +30,7 @@ namespace Walterlv.CloudTyping
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             _isEntered = true;
+            _runner.Run();
         }
 
         private async void Send()
