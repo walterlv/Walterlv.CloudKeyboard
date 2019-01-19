@@ -16,11 +16,12 @@ namespace Walterlv.CloudTyping
 
         public string Token { get; }
 
-        public async Task<TypingText> GetText()
+        public async Task<TypingText> GetTextAsync()
         {
             // 发送请求。
             var client = new HttpClient();
-            var response = await (await client.GetAsync(_url).ConfigureAwait(false))
+            var content = new StringContent("", Encoding.UTF8, "text");
+            var response = await (await client.PostAsync(_url, content).ConfigureAwait(false))
                 .Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // 返回响应。
@@ -28,7 +29,7 @@ namespace Walterlv.CloudTyping
             return result;
         }
 
-        public async Task<TypingResponse> PutText(string text,
+        public async Task<TypingResponse> SetTextAsync(string text,
             int caretStartIndex = -1, int caretEndIndex = -1, bool enter = false)
         {
             // 准备数据。

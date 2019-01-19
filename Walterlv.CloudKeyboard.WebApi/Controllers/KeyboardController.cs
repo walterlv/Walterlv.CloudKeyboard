@@ -32,7 +32,7 @@ namespace Walterlv.CloudTyping.Controllers
                 return value;
             }
 
-            return new TypingText("");
+            return NotFound(new TypingResponse(false, $"Token {token} not found."));
         }
 
         // GET api/keyboard/5
@@ -54,8 +54,8 @@ namespace Walterlv.CloudTyping.Controllers
         }
 
         // PUT api/keyboard/5
-        [HttpPost("{token}")]
-        public ActionResult<TypingResponse> HttpPost(string token, [FromBody] TypingText value)
+        [HttpPut("{token}")]
+        public ActionResult<TypingResponse> Put(string token, [FromBody] TypingText value)
         {
             if (TypingTextRepo.TryGetValue(token, out var queue))
             {
@@ -72,7 +72,7 @@ namespace Walterlv.CloudTyping.Controllers
                 }
             }
 
-            return new TypingResponse(false, "Token not found.");
+            return NotFound(new TypingResponse(false, $"Token {token} not found."));
         }
 
         // DELETE api/keyboard/5
