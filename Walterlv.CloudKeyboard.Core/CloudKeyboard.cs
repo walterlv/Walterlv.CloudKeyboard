@@ -21,8 +21,8 @@ namespace Walterlv.CloudTyping
             // 发送请求。
             var client = new HttpClient();
             var content = new StringContent("", Encoding.UTF8, "application/json");
-            var response = await (await client.PostAsync(_url, content).ConfigureAwait(false))
-                .Content.ReadAsStringAsync().ConfigureAwait(false);
+            var responseMessage = await client.PostAsync(_url, content).ConfigureAwait(false);
+            var response = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // 返回响应。
             var result = JsonConvert.DeserializeObject<TypingText>(response);
@@ -38,8 +38,8 @@ namespace Walterlv.CloudTyping
             // 发送请求。
             var client = new HttpClient();
             var content = new StringContent(typingText, Encoding.UTF8, "application/json");
-            var response = await (await client.PutAsync(_url, content).ConfigureAwait(false))
-                .Content.ReadAsStringAsync().ConfigureAwait(false);
+            var responseMessage = await client.PutAsync(_url, content).ConfigureAwait(false);
+            var response = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             // 返回响应。
             var result = JsonConvert.DeserializeObject<TypingResponse>(response);

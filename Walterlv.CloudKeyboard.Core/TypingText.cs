@@ -13,8 +13,8 @@ namespace Walterlv.CloudTyping
         public TypingText(string text, int caretStartIndex = -1, int caretEndIndex = -1, bool enter = false)
         {
             _text = text ?? "";
-            _caretStartIndex = caretStartIndex < 0 || caretStartIndex > text.Length ? text.Length : caretStartIndex;
-            _caretEndIndex = caretEndIndex < 0 || caretEndIndex > text.Length ? text.Length : caretEndIndex;
+            _caretStartIndex = caretStartIndex < 0 || caretStartIndex > _text.Length ? _text.Length : caretStartIndex;
+            _caretEndIndex = caretEndIndex < 0 || caretEndIndex > _text.Length ? _text.Length : caretEndIndex;
             Enter = enter;
         }
 
