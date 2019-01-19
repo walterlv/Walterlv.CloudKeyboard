@@ -155,6 +155,12 @@
       <Version>6.2.3</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Walterlv.CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj">
+      <Project>{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1}</Project>
+      <Name>Walterlv.CloudKeyboard.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -8,6 +8,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <TextBox x:Name="TypingTextBox" TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
     </Grid>
 </Page>
