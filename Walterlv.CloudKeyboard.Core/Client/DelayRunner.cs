@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Walterlv.CloudTyping
+namespace Walterlv.CloudTyping.Client
 {
     public class DelayRunner<TRunningState>
     {
