@@ -8,17 +8,13 @@ namespace Walterlv.CloudTyping
     public partial class MainWindow : Window
     {
         private CloudKeyboard _keyboard;
-        private readonly DelayRunner _runner;
-        private string _typingText;
-        private int _selectionStart;
-        private int _selectionLength;
-        private bool _isEntered;
+        private readonly DelayRunner<TypingText> _runner;
 
         public MainWindow()
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
-            _runner = new DelayRunner(TimeSpan.FromSeconds(0.2), SendCore);
+            _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.2), SendCore);
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -33,26 +29,21 @@ namespace Walterlv.CloudTyping
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            _isEntered = true;
-            Send();
+            Send(true);
             TypingTextBox.Text = "";
         }
 
-        private void Send()
+        private void Send(bool enter = false)
         {
-            _typingText = TypingTextBox.Text;
-            _selectionStart = TypingTextBox.SelectionStart;
-            _selectionLength = TypingTextBox.SelectionLength;
-            _runner.Run();
+            _runner.Run(new TypingText(TypingTextBox.Text, TypingTextBox.SelectionStart,
+                TypingTextBox.SelectionStart + TypingTextBox.SelectionLength, enter), enter);
         }
 
-        private async Task SendCore()
+        private async Task SendCore(TypingText state)
         {
             try
             {
-                await _keyboard.PutTextAsync(_typingText, _selectionStart,
-                    _selectionStart + _selectionLength, _isEntered);
-                _isEntered = false;
+                await _keyboard.PutTextAsync(state.Text, state.CaretStartIndex, state.CaretEndIndex, state.Enter);
             }
             catch (Exception ex)
             {
