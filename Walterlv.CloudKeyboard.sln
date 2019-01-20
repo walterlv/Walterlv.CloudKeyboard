@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Wpf", "Walterlv.CloudKeyboard.Wpf\Walterlv.CloudKeyboard.Wpf.csproj", "{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.iOS.old", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.iOS.old.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.iOS.old", "Walterlv.CloudKeyboard.old\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.iOS.old.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Walterlv.CloudKeyboard.iOS.old", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.old.shproj", "{6A018A28-B981-4DB3-BDF5-856DFC515860}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Walterlv.CloudKeyboard.iOS.old", "Walterlv.CloudKeyboard.old\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.old.shproj", "{6A018A28-B981-4DB3-BDF5-856DFC515860}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.Extension", "Walterlv.CloudKeyboard.iOS.Extension\Walterlv.CloudKeyboard.iOS.Extension.csproj", "{F70F519C-49D8-4178-B05B-C4A0391D7C91}"
 EndProject
@@ -31,8 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3B434268-9
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems*{6a018a28-b981-4db3-bdf5-856dfc515860}*SharedItemsImports = 13
-		Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems*{ebab995b-abcf-488a-a3fa-726f99cfc9a2}*SharedItemsImports = 4
+		Walterlv.CloudKeyboard.old\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems*{6a018a28-b981-4db3-bdf5-856dfc515860}*SharedItemsImports = 13
+		Walterlv.CloudKeyboard.old\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems*{ebab995b-abcf-488a-a3fa-726f99cfc9a2}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
