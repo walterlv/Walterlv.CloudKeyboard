@@ -13,11 +13,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.Wpf", "Walterlv.CloudKeyboard.Wpf\Walterlv.CloudKeyboard.Wpf.csproj", "{83D719E9-3D7B-4266-BE47-0FDEB92FECCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.iOS", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.iOS.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.iOS.old", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.iOS.old.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Walterlv.CloudKeyboard.iOS", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.shproj", "{6A018A28-B981-4DB3-BDF5-856DFC515860}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Walterlv.CloudKeyboard.iOS.old", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.old.shproj", "{6A018A28-B981-4DB3-BDF5-856DFC515860}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.Extension", "Walterlv.CloudKeyboard.iOS.Extension\Walterlv.CloudKeyboard.iOS.Extension.csproj", "{F70F519C-49D8-4178-B05B-C4A0391D7C91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iOS", "iOS", "{B3A6F801-0997-4EAE-8F7C-41D90B224B61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iOS.old", "iOS.old", "{58B7C914-5856-4606-A6AC-E36B2BD0FF59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4175E5A0-1B5A-47E4-A9EA-0FC421148938}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{3120DFA2-0946-4259-833C-7A704CF00ECC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3B434268-93DE-49AD-83B0-069B50CB6891}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -454,6 +464,16 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ECE91EB2-2DD8-41F7-BE7F-FB57484807B1} = {3B434268-93DE-49AD-83B0-069B50CB6891}
+		{F970BED6-96C9-42BB-A3F6-C141FD9EA715} = {4175E5A0-1B5A-47E4-A9EA-0FC421148938}
+		{EE74B884-6E2B-4D73-B5E3-B2C22BF4B2FF} = {3B434268-93DE-49AD-83B0-069B50CB6891}
+		{9A511A00-B27F-42FC-B398-5ABE4D60C2E1} = {3120DFA2-0946-4259-833C-7A704CF00ECC}
+		{83D719E9-3D7B-4266-BE47-0FDEB92FECCB} = {3120DFA2-0946-4259-833C-7A704CF00ECC}
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2} = {58B7C914-5856-4606-A6AC-E36B2BD0FF59}
+		{6A018A28-B981-4DB3-BDF5-856DFC515860} = {58B7C914-5856-4606-A6AC-E36B2BD0FF59}
+		{F70F519C-49D8-4178-B05B-C4A0391D7C91} = {B3A6F801-0997-4EAE-8F7C-41D90B224B61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19215C22-DBE9-4567-A4E4-FCBCDED21E1A}
