@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Walterlv.CloudTyping
 {
     public class DelayRunner
     {
-        private readonly Action _action;
+        private readonly Func<Task> _asyncAction;
         private readonly Timer _timer;
         private bool _isWaiting;
 
-        public DelayRunner(TimeSpan delay, Action action)
+        public DelayRunner(TimeSpan delay, Func<Task> asyncAction)
         {
-            _action = action;
+            _asyncAction = asyncAction;
             _timer = new Timer(delay.TotalMilliseconds)
             {
                 AutoReset = false,
@@ -32,7 +33,7 @@ namespace Walterlv.CloudTyping
         private void OnElapsed(object sender, ElapsedEventArgs e)
         {
             _isWaiting = false;
-            _action?.Invoke();
+            _asyncAction?.Invoke();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -45,7 +46,7 @@ namespace Walterlv.CloudTyping
             _runner.Run();
         }
 
-        private async void SendCore()
+        private async Task SendCore()
         {
             try
             {
