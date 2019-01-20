@@ -28,12 +28,13 @@ namespace Walterlv.CloudTyping
             {
                 _isRequired = false;
                 _isRunning = true;
-                await Task.Delay(_delay);
+                await Task.Delay(_delay).ConfigureAwait(false);
                 if (_isRequired)
                 {
                     continue;
                 }
-                await _asyncAction();
+
+                await _asyncAction().ConfigureAwait(false);
             }
 
             _isRunning = false;
