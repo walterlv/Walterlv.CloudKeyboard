@@ -44,6 +44,7 @@ namespace Walterlv.CloudTyping.Client
         public void Send(bool enter = false)
         {
             var typing = _typingGetter();
+            typing.Text = typing.Text.Replace("\r\n", "\n");
 
             if (enter)
             {
