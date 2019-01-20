@@ -2,6 +2,6 @@
 {
     public static class HostInfo
     {
-        public const string BaseUrl = "http://172.18.134.14:5000/api/keyboard";
+        public const string BaseUrl = "http://172.18.88.107:5000/api/keyboard";
     }
 }
