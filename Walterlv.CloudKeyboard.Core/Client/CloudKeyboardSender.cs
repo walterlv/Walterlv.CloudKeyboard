@@ -47,9 +47,20 @@ namespace Walterlv.CloudTyping.Client
             if (enter)
             {
                 typing.Freeze();
+                _runner.Run(typing, true);
+            }
+            else if (_lastTyping != null)
+            {
+                var isEqual = _lastTyping.Text == typing.Text
+                              && _lastTyping.CaretStartIndex == typing.CaretStartIndex
+                              && _lastTyping.CaretEndIndex == typing.CaretEndIndex;
+                if (!isEqual)
+                {
+                    _runner.Run(typing);
+                }
             }
 
-            _runner.Run(typing, enter);
+            _lastTyping = typing;
         }
 
         private async Task SendCore(TypingText state)
@@ -64,6 +75,7 @@ namespace Walterlv.CloudTyping.Client
             }
         }
 
+        private TypingText _lastTyping;
         private CloudKeyboard _keyboard;
         private readonly Func<TypingText> _typingGetter;
         private readonly DelayRunner<TypingText> _runner;
