@@ -1,71 +1,61 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Walterlv.CloudTyping.Client;
 
 namespace Walterlv.CloudTyping
 {
     public partial class MainWindow : Window
     {
-        private CloudKeyboard _keyboard;
-        private readonly DelayRunner<TypingText> _runner;
+        private readonly CloudKeyboardSender _sender;
 
         public MainWindow()
         {
             InitializeComponent();
-            _keyboard = new CloudKeyboard("0");
-            _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.2), SendCore);
+
+            _sender = new CloudKeyboardSender(() => new TypingText(
+                TypingTextBox.Text, TypingTextBox.SelectionStart,
+                TypingTextBox.SelectionStart + TypingTextBox.SelectionLength));
+            _sender.TargetUpdated += OnTargetUpdated;
+            _sender.ExceptionOccurred += OnExceptionOccurred;
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Send();
+            _sender.Send();
         }
 
         private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            Send();
+            _sender.Send();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            Send(true);
+            _sender.Send(true);
             TypingTextBox.Text = "";
         }
 
-        private void Send(bool enter = false)
+        private void OnActivated(object sender, EventArgs e)
         {
-            _runner.Run(new TypingText(TypingTextBox.Text, TypingTextBox.SelectionStart,
-                TypingTextBox.SelectionStart + TypingTextBox.SelectionLength, enter), enter);
+            _sender.Reload();
         }
 
-        private async Task SendCore(TypingText state)
+        private void OnTargetUpdated(object sender, TypingTextEventArgs e)
         {
-            try
-            {
-                await _keyboard.PutTextAsync(state.Text, state.CaretStartIndex, state.CaretEndIndex, state.Enter);
-            }
-            catch (Exception ex)
-            {
-                await TypingTextBox.Dispatcher.InvokeAsync(() =>
-                {
-                    ErrorTipTextBlock.Visibility = Visibility;
-                    ErrorTipTextBlock.Text = ex.ToString();
-                });
-            }
+            var typing = e.Typing;
+            TypingTextBox.Text = typing.Text;
+            TypingTextBox.SelectionStart = typing.CaretStartIndex;
+            TypingTextBox.SelectionLength = typing.CaretEndIndex - typing.CaretStartIndex;
         }
 
-        private async void OnActivated(object sender, EventArgs e)
+        private async void OnExceptionOccurred(object sender, ExceptionEventArgs e)
         {
-            var text = await _keyboard.FetchTextAsync();
-            if (!text.Enter)
+            await TypingTextBox.Dispatcher.InvokeAsync(() =>
             {
-                TypingTextBox.Text = text.Text;
-                var selectionStart = Math.Min(text.CaretStartIndex, text.CaretEndIndex);
-                var selectionEnd = Math.Max(text.CaretStartIndex, text.CaretEndIndex);
-                TypingTextBox.SelectionStart = selectionStart;
-                TypingTextBox.SelectionLength = selectionEnd - selectionStart;
-            }
+                ErrorTipTextBlock.Visibility = Visibility;
+                ErrorTipTextBlock.Text = e.Exception.ToString();
+            });
         }
     }
 }
