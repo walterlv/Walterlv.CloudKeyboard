@@ -1,21 +1,18 @@
 ﻿using System;
-using ObjCRuntime;
-using UIKit;
-using Walterlv.CloudTyping.Client;
 
-namespace Walterlv.CloudTyping
+using ObjCRuntime;
+using Foundation;
+using UIKit;
+
+namespace CloudKeyboard
 {
     public partial class KeyboardViewController : UIInputViewController
     {
-        private readonly CloudKeyboardReceiver _receiver;
         UIButton nextKeyboardButton;
 
-        public KeyboardViewController(IntPtr handle) : base(handle)
+        protected KeyboardViewController(IntPtr handle) : base(handle)
         {
-            _receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl);
-            _receiver.Typing += OnReceived;
-            _receiver.Confirmed += OnConfirmed;
-            _receiver.Start();
+            // Note: this .ctor should not contain any initialization logic.
         }
 
         public override void DidReceiveMemoryWarning()
@@ -73,21 +70,6 @@ namespace Walterlv.CloudTyping
             }
 
             nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
-        }
-
-        private void OnReceived(object sender, TypingTextEventArgs e)
-        {
-            while (TextDocumentProxy.HasText)
-            {
-                TextDocumentProxy.DeleteBackward();
-            }
-
-            TextDocumentProxy.InsertText(e.Typing.Text);
-        }
-
-        private void OnConfirmed(object sender, TypingTextEventArgs e)
-        {
-            base.TextDocumentProxy.InsertText("\n");
         }
     }
 }
