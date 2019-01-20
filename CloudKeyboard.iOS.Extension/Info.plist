@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>CloudKeyboard.Keyboard</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.walterlv.CloudKeyboard.Keyboard</string>
+	<string>com.walterlv.CloudKeyboard.CloudKeyboard.Keyboard</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleInfoDictionaryVersion</key>

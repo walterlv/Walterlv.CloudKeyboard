@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Walterlv.CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj" />
+    <ProjectReference Include="..\CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj" />
   </ItemGroup>
 
 </Project>

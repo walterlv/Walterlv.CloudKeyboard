@@ -152,9 +152,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Walterlv.CloudKeyboard\Walterlv.CloudKeyboard.csproj">
-      <Project>{185DFE89-4BE4-4502-8665-AFA57AD956E4}</Project>
-      <Name>Walterlv.CloudKeyboard</Name>
+    <ProjectReference Include="..\CloudKeyboard.iOS.Extension\Walterlv.CloudKeyboard.iOS.Extension.csproj">
+      <Project>{f70f519c-49d8-4178-b05b-c4a0391d7c91}</Project>
+      <Name>Walterlv.CloudKeyboard.iOS.Extension</Name>
+      <IsAppExtension>true</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj">
+      <Project>{a2182b4a-a700-47be-8905-65e8c258b87e}</Project>
+      <Name>Walterlv.CloudKeyboard.Xaml</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
