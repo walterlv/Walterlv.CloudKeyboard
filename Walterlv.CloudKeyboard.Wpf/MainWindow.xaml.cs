@@ -49,7 +49,7 @@ namespace Walterlv.CloudTyping
         {
             try
             {
-                await _keyboard.SetTextAsync(_typingText, _selectionStart,
+                await _keyboard.PutTextAsync(_typingText, _selectionStart,
                     _selectionStart + _selectionLength, _isEntered);
                 _isEntered = false;
             }
@@ -65,7 +65,7 @@ namespace Walterlv.CloudTyping
 
         private async void OnActivated(object sender, EventArgs e)
         {
-            var text = await _keyboard.GetTextAsync();
+            var text = await _keyboard.FetchTextAsync();
             if (!text.Enter)
             {
                 TypingTextBox.Text = text.Text;

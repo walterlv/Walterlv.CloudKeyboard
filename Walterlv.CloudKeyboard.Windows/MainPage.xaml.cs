@@ -30,10 +30,10 @@ namespace Walterlv.CloudTyping
         {
             try
             {
-                //await _keyboard.SetTextAsync(TypingTextBox.Text,
+                //await _keyboard.PutTextAsync(TypingTextBox.Text,
                 //    TypingTextBox.SelectionStart, TypingTextBox.SelectionStart + TypingTextBox.SelectionLength);
 
-                var typingText = await _keyboard.GetTextAsync();
+                var typingText = await _keyboard.FetchTextAsync();
             }
             catch (Exception ex)
             {

@@ -31,7 +31,7 @@ namespace Walterlv.CloudTyping
             var reader = new ConsoleLineReader();
             reader.TextChanged += async (sender, args) =>
             {
-                await keyboard.SetTextAsync(args.Line, args.Line.Length - 1, args.Line.Length);
+                await keyboard.PutTextAsync(args.Line, args.Line.Length - 1, args.Line.Length);
             };
 
             while (true)
@@ -59,7 +59,7 @@ namespace Walterlv.CloudTyping
                 Console.CursorTop = inScreenCount + 1;
                 Console.CursorLeft = 0;
 
-                var typing = await keyboard.GetTextAsync();
+                var typing = await keyboard.FetchTextAsync();
                 if (typing.Enter)
                 {
                     inScreenCount++;
