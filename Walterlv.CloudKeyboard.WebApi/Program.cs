@@ -12,6 +12,7 @@ namespace Walterlv.CloudTyping
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001")
                 .UseStartup<Startup>();
     }
 }
