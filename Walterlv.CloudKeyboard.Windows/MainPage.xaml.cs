@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,7 +11,7 @@ namespace Walterlv.CloudTyping
         public MainPage()
         {
             InitializeComponent();
-            _keyboard = new CloudKeyboard("0");
+            _keyboard = new CloudKeyboard(HostInfo.BaseUrl, "0");
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)

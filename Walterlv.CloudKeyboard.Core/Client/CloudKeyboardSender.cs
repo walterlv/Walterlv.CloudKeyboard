@@ -5,9 +5,10 @@ namespace Walterlv.CloudTyping.Client
 {
     public class CloudKeyboardSender
     {
-        public CloudKeyboardSender(Func<TypingText> typingGetter)
+        public CloudKeyboardSender(string baseUrl, Func<TypingText> typingGetter)
         {
             _typingGetter = typingGetter;
+            _baseUrl = baseUrl;
             _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.2), SendCore);
             Token = "0";
         }
@@ -15,7 +16,7 @@ namespace Walterlv.CloudTyping.Client
         public string Token
         {
             get => _keyboard.Token;
-            set => _keyboard = new CloudKeyboard(value);
+            set => _keyboard = new CloudKeyboard(_baseUrl, value);
         }
 
         public event EventHandler<TypingTextEventArgs> TargetUpdated;
@@ -80,6 +81,7 @@ namespace Walterlv.CloudTyping.Client
 
         private TypingText _lastTyping;
         private CloudKeyboard _keyboard;
+        private readonly string _baseUrl;
         private readonly Func<TypingText> _typingGetter;
         private readonly DelayRunner<TypingText> _runner;
     }

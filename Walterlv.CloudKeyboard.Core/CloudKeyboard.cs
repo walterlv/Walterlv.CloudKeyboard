@@ -8,10 +8,10 @@ namespace Walterlv.CloudTyping
 {
     public class CloudKeyboard
     {
-        public CloudKeyboard(string token)
+        public CloudKeyboard(string baseUrl, string token)
         {
             Token = token ?? throw new ArgumentNullException(nameof(token));
-            _url = $"{BaseUrl}/{Token}";
+            _url = $"{baseUrl}/{Token}";
         }
 
         public string Token { get; }
@@ -57,8 +57,7 @@ namespace Walterlv.CloudTyping
             var result = JsonConvert.DeserializeObject<TypingResponse>(response);
             return result;
         }
-
-        private const string BaseUrl = "http://localhost:65129/api/keyboard";
+        
         private readonly string _url;
     }
 }

@@ -13,7 +13,7 @@ namespace Walterlv.CloudTyping
         {
             InitializeComponent();
 
-            _sender = new CloudKeyboardSender(() => new TypingText(
+            _sender = new CloudKeyboardSender(HostInfo.BaseUrl, () => new TypingText(
                 TypingTextBox.Text, TypingTextBox.SelectionStart,
                 TypingTextBox.SelectionStart + TypingTextBox.SelectionLength));
             _sender.TargetUpdated += OnTargetUpdated;

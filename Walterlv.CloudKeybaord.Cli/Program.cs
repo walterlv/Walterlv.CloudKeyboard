@@ -15,7 +15,7 @@ namespace Walterlv.CloudTyping
             Console.Title = "Walterlv Cloud Keyboard - PC";
             var token = ReadSingleLineText("Input a token: ");
 
-            var keyboard = new CloudKeyboard(token);
+            var keyboard = new CloudKeyboard(HostInfo.BaseUrl, token);
             var reader = new ConsoleLineReader();
             reader.TextChanged += async (sender, args) =>
             {
@@ -47,7 +47,7 @@ namespace Walterlv.CloudTyping
             var inScreenCount = 0;
 
             // 模拟构造函数。
-            var receiver = new CloudKeyboardReceiver();
+            var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl);
             receiver.Typing += OnReceived;
             receiver.Confirmed += OnConfirmed;
             receiver.Start();

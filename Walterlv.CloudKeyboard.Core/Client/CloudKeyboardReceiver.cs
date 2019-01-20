@@ -5,8 +5,9 @@ namespace Walterlv.CloudTyping.Client
 {
     public class CloudKeyboardReceiver
     {
-        public CloudKeyboardReceiver()
+        public CloudKeyboardReceiver(string baseUrl)
         {
+            _baseUrl = baseUrl;
             Token = "0";
         }
 
@@ -55,11 +56,12 @@ namespace Walterlv.CloudTyping.Client
         public string Token
         {
             get => _keyboard.Token;
-            set => _keyboard = new CloudKeyboard(value);
+            set => _keyboard = new CloudKeyboard(_baseUrl, value);
         }
 
         private TypingText _lastTyping;
         private CloudKeyboard _keyboard;
         private bool _isRunning;
+        private readonly string _baseUrl;
     }
 }
