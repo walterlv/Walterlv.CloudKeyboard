@@ -54,13 +54,16 @@ namespace Walterlv.CloudTyping.Client
                 var isEqual = _lastTyping.Text == typing.Text
                               && _lastTyping.CaretStartIndex == typing.CaretStartIndex
                               && _lastTyping.CaretEndIndex == typing.CaretEndIndex;
+                _lastTyping = typing;
                 if (!isEqual)
                 {
                     _runner.Run(typing);
                 }
             }
-
-            _lastTyping = typing;
+            else
+            {
+                _lastTyping = typing;
+            }
         }
 
         private async Task SendCore(TypingText state)

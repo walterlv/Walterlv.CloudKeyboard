@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Walterlv.CloudTyping.Client;
 
 namespace Walterlv.CloudTyping
 {
@@ -9,20 +7,10 @@ namespace Walterlv.CloudTyping
     {
         static void Main(string[] args)
         {
-            var strings = Process.GetProcesses().Select(x => x.MainWindowTitle)
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Where(x => x.StartsWith("Walterlv Cloud Keyboard")).ToArray();
-            if (true)
-            {
-                RunAsMobileEnd().Wait();
-            }
-            else
-            {
-                RunAsPcEnd().Wait();
-            }
+            RunAsMobileEnd();
         }
 
-        private static Task RunAsPcEnd()
+        private static void RunAsPcEnd()
         {
             Console.Title = "Walterlv Cloud Keyboard - PC";
             var token = ReadSingleLineText("Input a token: ");
@@ -38,70 +26,89 @@ namespace Walterlv.CloudTyping
             {
                 reader.ReadLine();
             }
+
+            string ReadSingleLineText(string tip)
+            {
+                string result;
+
+                do
+                {
+                    Console.Write(tip);
+                    result = Console.ReadLine()?.Trim().ToLowerInvariant();
+                } while (string.IsNullOrWhiteSpace(result));
+
+                return result;
+            }
         }
 
-        private static async Task RunAsMobileEnd()
+        private static void RunAsMobileEnd()
         {
             Console.Title = "Walterlv Cloud Keyboard - Mobile";
-            var token = ReadSingleLineText("Input a token: ");
             var inScreenCount = 0;
-            var keyboard = new CloudKeyboard(token);
 
-            while (true)
+            // 模拟构造函数。
+            var receiver = new CloudKeyboardReceiver();
+            receiver.Typing += OnReceived;
+            receiver.Confirmed += OnConfirmed;
+            receiver.Start();
+
+            // 模拟消息循环。
+            ConsoleKeyInfo key;
+            do
             {
-                Console.CursorTop = inScreenCount + 1;
+                key = Console.ReadKey(true);
+            } while (key.Key != ConsoleKey.Escape);
+
+            receiver.Stop();
+
+            void OnReceived(object sender, TypingTextEventArgs e)
+            {
+                ClearCurrentDocument();
+                SetDocument(e.Typing);
+            }
+
+            void OnConfirmed(object sender, TypingTextEventArgs e)
+            {
+                ClearCurrentDocument();
+
+                inScreenCount++;
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("[上屏] ");
+                Console.Write(e.Typing.Text);
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+
+            void SetDocument(TypingText typing)
+            {
+                for (var i = 0; i < typing.Text.Length; i++)
+                {
+                    var c = typing.Text[i];
+                    if (typing.CaretStartIndex <= i && typing.CaretEndIndex > i)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(c);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(c);
+                    }
+                }
+            }
+
+            void ClearCurrentDocument()
+            {
+                Console.CursorTop = inScreenCount;
                 Console.CursorLeft = 0;
                 for (var i = 0; i < 320; i++)
                 {
                     Console.Write(' ');
                 }
 
-                Console.CursorTop = inScreenCount + 1;
+                Console.CursorTop = inScreenCount;
                 Console.CursorLeft = 0;
-
-                var typing = await keyboard.FetchTextAsync();
-                if (typing.Enter)
-                {
-                    inScreenCount++;
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("[上屏] ");
-                    Console.Write(typing.Text);
-                    Console.ResetColor();
-                    Console.WriteLine();
-                }
-                else
-                {
-                    for (var i = 0; i < typing.Text.Length; i++)
-                    {
-                        var c = typing.Text[i];
-                        if (typing.CaretStartIndex <= i && typing.CaretEndIndex > i)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(c);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write(c);
-                        }
-                    }
-                }
-
-                await Task.Delay(500);
             }
-        }
-
-        private static string ReadSingleLineText(string tip)
-        {
-            string result;
-
-            do
-            {
-                Console.Write(tip);
-                result = Console.ReadLine()?.Trim().ToLowerInvariant();
-            } while (string.IsNullOrWhiteSpace(result));
-
-            return result;
         }
     }
 }
