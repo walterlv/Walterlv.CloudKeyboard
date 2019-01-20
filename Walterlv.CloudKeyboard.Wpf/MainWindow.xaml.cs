@@ -18,7 +18,7 @@ namespace Walterlv.CloudTyping
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
-            _runner = new DelayRunner(TimeSpan.FromSeconds(0.1), SendCore);
+            _runner = new DelayRunner(TimeSpan.FromSeconds(0.2), SendCore);
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)

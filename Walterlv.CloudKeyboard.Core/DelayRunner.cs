@@ -1,39 +1,42 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace Walterlv.CloudTyping
 {
     public class DelayRunner
     {
         private readonly Func<Task> _asyncAction;
-        private readonly Timer _timer;
-        private bool _isWaiting;
+        private readonly TimeSpan _delay;
+        private bool _isRequired;
+        private bool _isRunning;
 
         public DelayRunner(TimeSpan delay, Func<Task> asyncAction)
         {
+            _delay = delay;
             _asyncAction = asyncAction;
-            _timer = new Timer(delay.TotalMilliseconds)
-            {
-                AutoReset = false,
-            };
-            _timer.Elapsed += OnElapsed;
         }
 
-        public void Run()
+        public async void Run()
         {
-            if (_isWaiting)
+            if (_isRunning)
             {
+                _isRequired = true;
                 return;
             }
-            _timer.Stop();
-            _timer.Start();
-        }
 
-        private void OnElapsed(object sender, ElapsedEventArgs e)
-        {
-            _isWaiting = false;
-            _asyncAction?.Invoke();
+            while (_isRequired || !_isRunning)
+            {
+                _isRequired = false;
+                _isRunning = true;
+                await Task.Delay(_delay);
+                if (_isRequired)
+                {
+                    continue;
+                }
+                await _asyncAction();
+            }
+
+            _isRunning = false;
         }
     }
 }
