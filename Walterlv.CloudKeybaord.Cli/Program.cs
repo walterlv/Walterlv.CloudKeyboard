@@ -44,23 +44,25 @@ namespace Walterlv.CloudTyping
         {
             Console.Title = "Walterlv Cloud Keyboard - Mobile";
             var token = ReadSingleLineText("Input a token: ");
+            var inScreenCount = 0;
             var keyboard = new CloudKeyboard(token);
 
             while (true)
             {
-                Console.CursorTop = 1;
+                Console.CursorTop = inScreenCount + 1;
                 Console.CursorLeft = 0;
                 for (var i = 0; i < 320; i++)
                 {
                     Console.Write(' ');
                 }
 
-                Console.CursorTop = 1;
+                Console.CursorTop = inScreenCount + 1;
                 Console.CursorLeft = 0;
 
                 var typing = await keyboard.GetTextAsync();
                 if (typing.Enter)
                 {
+                    inScreenCount++;
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write("[上屏] ");
                     Console.Write(typing.Text);

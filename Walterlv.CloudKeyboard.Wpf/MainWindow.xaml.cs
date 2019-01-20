@@ -8,47 +8,59 @@ namespace Walterlv.CloudTyping
     {
         private CloudKeyboard _keyboard;
         private readonly DelayRunner _runner;
+        private string _typingText;
+        private int _selectionStart;
+        private int _selectionLength;
         private bool _isEntered;
 
         public MainWindow()
         {
             InitializeComponent();
             _keyboard = new CloudKeyboard("0");
-            _runner = new DelayRunner(TimeSpan.FromSeconds(0.1), Send);
+            _runner = new DelayRunner(TimeSpan.FromSeconds(0.1), SendCore);
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _runner.Run();
+            Send();
         }
 
         private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            _runner.Run();
+            Send();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             _isEntered = true;
+            Send();
+            TypingTextBox.Text = "";
+        }
+
+        private void Send()
+        {
+            _typingText = TypingTextBox.Text;
+            _selectionStart = TypingTextBox.SelectionStart;
+            _selectionLength = TypingTextBox.SelectionLength;
             _runner.Run();
         }
 
-        private async void Send()
+        private async void SendCore()
         {
-            await await TypingTextBox.Dispatcher.InvokeAsync(async () =>
+            try
             {
-                try
-                {
-                    await _keyboard.SetTextAsync(TypingTextBox.Text, TypingTextBox.SelectionStart,
-                        TypingTextBox.SelectionStart + TypingTextBox.SelectionLength, _isEntered);
-                    _isEntered = false;
-                }
-                catch (Exception ex)
+                await _keyboard.SetTextAsync(_typingText, _selectionStart,
+                    _selectionStart + _selectionLength, _isEntered);
+                _isEntered = false;
+            }
+            catch (Exception ex)
+            {
+                await TypingTextBox.Dispatcher.InvokeAsync(() =>
                 {
                     ErrorTipTextBlock.Visibility = Visibility;
                     ErrorTipTextBlock.Text = ex.ToString();
-                }
-            });
+                });
+            }
         }
 
         private async void OnActivated(object sender, EventArgs e)
