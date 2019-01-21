@@ -86,7 +86,7 @@ namespace Walterlv.CloudTyping
             var okButtonCenterXConstraint = NSLayoutConstraint.Create(okButton,
                 NSLayoutAttribute.Right, NSLayoutRelation.Equal, View, NSLayoutAttribute.Right, 1.0f, 0.0f);
             var okButtonCenterYConstraint = NSLayoutConstraint.Create(okButton,
-                NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterY, 1.0f, 0.0f);
+                NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1.0f, 0.0f);
             View.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
         }
 
