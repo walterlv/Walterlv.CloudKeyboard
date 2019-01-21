@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3B434268-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walterlv.CloudKeyboard.Xaml", "CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj", "{A2182B4A-A700-47BE-8905-65E8C258B87E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS", "CloudKeyboard.old\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS", "Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Walterlv.CloudKeyboard.iOS.iOS</RootNamespace>
+    <RootNamespace>Walterlv.CloudTyping</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>Walterlv.CloudKeyboard.iOS.iOS</AssemblyName>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
@@ -149,15 +149,15 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1009999" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CloudKeyboard.iOS.Extension\Walterlv.CloudKeyboard.iOS.Extension.csproj">
+    <ProjectReference Include="..\CloudKeyboard.iOS.Extension\Walterlv.CloudKeyboard.iOS.Extension.csproj">
       <IsAppExtension>true</IsAppExtension>
       <Project>{F70F519C-49D8-4178-B05B-C4A0391D7C91}</Project>
       <Name>Walterlv.CloudKeyboard.iOS.Extension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj">
+    <ProjectReference Include="..\CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj">
       <Project>{a2182b4a-a700-47be-8905-65e8c258b87e}</Project>
       <Name>Walterlv.CloudKeyboard.Xaml</Name>
     </ProjectReference>
