@@ -108,6 +108,12 @@ namespace Walterlv.CloudTyping
 
         private void DidConfirm(object sender, TypingTextEventArgs e)
         {
+            while (TextDocumentProxy.HasText)
+            {
+                TextDocumentProxy.DeleteBackward();
+            }
+
+            TextDocumentProxy.InsertText(e.Typing.Text);
             base.TextDocumentProxy.InsertText("\n");
         }
     }
