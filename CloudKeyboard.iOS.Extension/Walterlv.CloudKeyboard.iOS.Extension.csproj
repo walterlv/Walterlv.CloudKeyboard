@@ -98,16 +98,35 @@
     <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CloudKeyboard.Core\Client\CloudKeyboardReceiver.cs">
+      <Link>Core\Client\CloudKeyboardReceiver.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\Client\DelayRunner.cs">
+      <Link>Core\Client\DelayRunner.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\Client\ExceptionEventArgs.cs">
+      <Link>Core\Client\ExceptionEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\Client\TypingTextEventArgs.cs">
+      <Link>Core\Client\TypingTextEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\CloudKeyboard.cs">
+      <Link>Core\CloudKeyboard.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\HostInfo.cs">
+      <Link>Core\HostInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\TypingResponse.cs">
+      <Link>Core\TypingResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\CloudKeyboard.Core\TypingText.cs">
+      <Link>Core\TypingText.cs</Link>
+    </Compile>
     <Compile Include="KeyboardViewController.cs" />
     <Compile Include="KeyboardViewController.designer.cs">
       <DependentUpon>KeyboardViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj">
-      <Project>{ece91eb2-2dd8-41f7-be7f-fb57484807b1}</Project>
-      <Name>Walterlv.CloudKeyboard.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.AppExtension.CSharp.targets" />
 </Project>
