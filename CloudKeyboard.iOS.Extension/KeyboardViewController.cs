@@ -9,6 +9,7 @@ namespace Walterlv.CloudTyping
     {
         UIButton nextKeyboardButton;
         UIButton tokenButton;
+        UIButton okButton;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -61,7 +62,7 @@ namespace Walterlv.CloudTyping
             // Token 按钮
             tokenButton = new UIButton(UIButtonType.RoundedRect);
 
-            tokenButton.SetTitle(token, UIControlState.Normal);
+            tokenButton.SetTitle($"使用此文本设置你的 PC 键盘：{token}", UIControlState.Normal);
             tokenButton.SizeToFit();
             tokenButton.TranslatesAutoresizingMaskIntoConstraints = false;
 
@@ -72,6 +73,21 @@ namespace Walterlv.CloudTyping
             var tokenButtonCenterYConstraint = NSLayoutConstraint.Create(tokenButton,
                 NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterY, 1.0f, 0.0f);
             View.AddConstraints(new[] {tokenButtonCenterXConstraint, tokenButtonCenterYConstraint});
+
+            // 确认按钮
+            okButton = new UIButton(UIButtonType.System);
+
+            okButton.SetTitle(TextDocumentProxy.ReturnKeyType.ToString(), UIControlState.Normal);
+            okButton.SizeToFit();
+            okButton.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            View.AddSubview(okButton);
+
+            var okButtonCenterXConstraint = NSLayoutConstraint.Create(okButton,
+                NSLayoutAttribute.Right, NSLayoutRelation.Equal, View, NSLayoutAttribute.Right, 1.0f, 0.0f);
+            var okButtonCenterYConstraint = NSLayoutConstraint.Create(okButton,
+                NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterY, 1.0f, 0.0f);
+            View.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
         }
 
         public override void TextWillChange(IUITextInput textInput)
