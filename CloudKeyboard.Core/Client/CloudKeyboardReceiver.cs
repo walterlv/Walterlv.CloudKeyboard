@@ -5,10 +5,10 @@ namespace Walterlv.CloudTyping.Client
 {
     public class CloudKeyboardReceiver
     {
-        public CloudKeyboardReceiver(string baseUrl)
+        public CloudKeyboardReceiver(string baseUrl, string token)
         {
             _baseUrl = baseUrl;
-            Token = "0";
+            Token = token;
         }
 
         public event EventHandler<TypingTextEventArgs> Typing;

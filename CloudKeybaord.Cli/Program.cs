@@ -47,7 +47,7 @@ namespace Walterlv.CloudTyping
             var inScreenCount = 0;
 
             // 模拟构造函数。
-            var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl);
+            var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, "0");
             receiver.Typing += OnReceived;
             receiver.Confirmed += OnConfirmed;
             receiver.Start();

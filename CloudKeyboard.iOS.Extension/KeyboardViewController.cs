@@ -3,12 +3,15 @@
 using ObjCRuntime;
 using Foundation;
 using UIKit;
+using Walterlv.CloudTyping;
+using Walterlv.CloudTyping.Client;
 
 namespace CloudKeyboard
 {
     public partial class KeyboardViewController : UIInputViewController
     {
         UIButton nextKeyboardButton;
+        UIButton tokenButton;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -34,6 +37,13 @@ namespace CloudKeyboard
         {
             base.ViewDidLoad();
 
+            // 初始化打字。
+            var token = UIDevice.CurrentDevice.Name;
+            var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
+            receiver.Typing += DidReceive;
+            receiver.Confirmed += DidConfirm;
+            receiver.Start();
+
             // Perform custom UI setup here
             nextKeyboardButton = new UIButton(UIButtonType.System);
 
@@ -45,9 +55,26 @@ namespace CloudKeyboard
 
             View.AddSubview(nextKeyboardButton);
 
-            var nextKeyboardButtonLeftSideConstraint = NSLayoutConstraint.Create(nextKeyboardButton, NSLayoutAttribute.Left, NSLayoutRelation.Equal, View, NSLayoutAttribute.Left, 1.0f, 0.0f);
-            var nextKeyboardButtonBottomConstraint = NSLayoutConstraint.Create(nextKeyboardButton, NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1.0f, 0.0f);
-            View.AddConstraints(new[] { nextKeyboardButtonLeftSideConstraint, nextKeyboardButtonBottomConstraint });
+            var nextKeyboardButtonLeftSideConstraint = NSLayoutConstraint.Create(nextKeyboardButton,
+                NSLayoutAttribute.Left, NSLayoutRelation.Equal, View, NSLayoutAttribute.Left, 1.0f, 0.0f);
+            var nextKeyboardButtonBottomConstraint = NSLayoutConstraint.Create(nextKeyboardButton,
+                NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1.0f, 0.0f);
+            View.AddConstraints(new[] {nextKeyboardButtonLeftSideConstraint, nextKeyboardButtonBottomConstraint});
+
+            // Token 按钮
+            tokenButton = new UIButton(UIButtonType.RoundedRect);
+
+            tokenButton.SetTitle(token, UIControlState.Normal);
+            tokenButton.SizeToFit();
+            tokenButton.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            View.AddSubview(tokenButton);
+
+            var tokenButtonCenterXConstraint = NSLayoutConstraint.Create(tokenButton,
+                NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterX, 1.0f, 0.0f);
+            var tokenButtonCenterYConstraint = NSLayoutConstraint.Create(tokenButton,
+                NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterY, 1.0f, 0.0f);
+            View.AddConstraints(new[] {tokenButtonCenterXConstraint, tokenButtonCenterYConstraint});
         }
 
         public override void TextWillChange(IUITextInput textInput)
@@ -70,6 +97,21 @@ namespace CloudKeyboard
             }
 
             nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
+        }
+
+        private void DidReceive(object sender, TypingTextEventArgs e)
+        {
+            while (TextDocumentProxy.HasText)
+            {
+                TextDocumentProxy.DeleteBackward();
+            }
+
+            TextDocumentProxy.InsertText(e.Typing.Text);
+        }
+
+        private void DidConfirm(object sender, TypingTextEventArgs e)
+        {
+            base.TextDocumentProxy.InsertText("\n");
         }
     }
 }
