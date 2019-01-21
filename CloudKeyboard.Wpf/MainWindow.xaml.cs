@@ -13,7 +13,8 @@ namespace Walterlv.CloudTyping
         {
             InitializeComponent();
 
-            _sender = new CloudKeyboardSender(HostInfo.BaseUrl, "walterlv", () => new TypingText(
+            var token = GetTokenFromConfigs();
+            _sender = new CloudKeyboardSender(HostInfo.BaseUrl, token, () => new TypingText(
                 TypingTextBox.Text, TypingTextBox.SelectionStart,
                 TypingTextBox.SelectionStart + TypingTextBox.SelectionLength));
             _sender.TargetUpdated += OnTargetUpdated;
@@ -56,6 +57,22 @@ namespace Walterlv.CloudTyping
                 ErrorTipTextBlock.Visibility = Visibility;
                 ErrorTipTextBlock.Text = e.Exception.ToString();
             });
+        }
+
+        private static string GetTokenFromConfigs()
+        {
+            string token;
+
+            try
+            {
+                token = FileConfigurationRepo.Deserialize(@"configs.fkv")["Token"];
+            }
+            catch
+            {
+                token = "0";
+            }
+
+            return token;
         }
     }
 }
