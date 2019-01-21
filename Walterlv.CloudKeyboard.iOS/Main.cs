@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using UIKit;
 
-using Foundation;
-using UIKit;
-
-namespace Walterlv.CloudKeyboard.iOS.iOS
+namespace Walterlv.CloudTyping
 {
     public class Application
     {

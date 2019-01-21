@@ -11,7 +11,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Walterlv.CloudTyping</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Walterlv.CloudKeyboard.iOS.iOS</AssemblyName>
+    <AssemblyName>Walterlv.CloudKeyboard</AssemblyName>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>

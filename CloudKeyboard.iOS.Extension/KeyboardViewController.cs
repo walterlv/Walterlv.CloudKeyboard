@@ -1,12 +1,9 @@
 ﻿using System;
-
 using ObjCRuntime;
-using Foundation;
 using UIKit;
-using Walterlv.CloudTyping;
 using Walterlv.CloudTyping.Client;
 
-namespace CloudKeyboard
+namespace Walterlv.CloudTyping
 {
     public partial class KeyboardViewController : UIInputViewController
     {

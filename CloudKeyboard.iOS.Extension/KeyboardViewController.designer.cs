@@ -6,7 +6,7 @@
 
 using Foundation;
 
-namespace CloudKeyboard
+namespace Walterlv.CloudTyping
 {
     [Register("KeyboardViewController")]
     partial class KeyboardViewController

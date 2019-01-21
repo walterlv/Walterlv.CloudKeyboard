@@ -7,8 +7,8 @@
     <ProjectGuid>{F70F519C-49D8-4178-B05B-C4A0391D7C91}</ProjectGuid>
     <ProjectTypeGuids>{EE2C853D-36AF-4FDB-B1AD-8E90477E2198};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>CloudKeyboard</RootNamespace>
-    <AssemblyName>CloudKeyboard</AssemblyName>
+    <RootNamespace>Walterlv.CloudTyping</RootNamespace>
+    <AssemblyName>Walterlv.CloudKeyboard.Keyboard</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
