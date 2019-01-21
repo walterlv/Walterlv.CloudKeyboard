@@ -23,11 +23,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{3120
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3B434268-93DE-49AD-83B0-069B50CB6891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS", "CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.csproj", "{88133E5A-6151-45F0-88B6-2D7B4EB6719B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS.brk", "CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.brk.csproj", "{88133E5A-6151-45F0-88B6-2D7B4EB6719B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walterlv.CloudKeyboard.Xaml", "CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj", "{A2182B4A-A700-47BE-8905-65E8C258B87E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.CloudKeyboard.iOS", "CloudKeyboard.old\Walterlv.CloudKeyboard.iOS.iOS\Walterlv.CloudKeyboard.iOS.csproj", "{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CloudKeyboard.old\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems*{ebab995b-abcf-488a-a3fa-726f99cfc9a2}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
 		Ad-Hoc|ARM = Ad-Hoc|ARM
@@ -501,6 +506,42 @@ Global
 		{A2182B4A-A700-47BE-8905-65E8C258B87E}.Release|x64.Build.0 = Release|Any CPU
 		{A2182B4A-A700-47BE-8905-65E8C258B87E}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2182B4A-A700-47BE-8905-65E8C258B87E}.Release|x86.Build.0 = Release|Any CPU
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|Any CPU.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|ARM.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|ARM64.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|x64.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Ad-Hoc|x86.ActiveCfg = Ad-Hoc|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|Any CPU.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|ARM.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|ARM64.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|x64.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.AppStore|x86.ActiveCfg = AppStore|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|ARM.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|ARM64.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|iPhone.Build.0 = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|x64.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Debug|x86.ActiveCfg = Debug|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|ARM.ActiveCfg = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|ARM64.ActiveCfg = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|iPhone.ActiveCfg = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|iPhone.Build.0 = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|x64.ActiveCfg = Release|iPhone
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2}.Release|x86.ActiveCfg = Release|iPhone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -514,6 +555,7 @@ Global
 		{F70F519C-49D8-4178-B05B-C4A0391D7C91} = {B3A6F801-0997-4EAE-8F7C-41D90B224B61}
 		{88133E5A-6151-45F0-88B6-2D7B4EB6719B} = {B3A6F801-0997-4EAE-8F7C-41D90B224B61}
 		{A2182B4A-A700-47BE-8905-65E8C258B87E} = {3B434268-93DE-49AD-83B0-069B50CB6891}
+		{EBAB995B-ABCF-488A-A3FA-726F99CFC9A2} = {B3A6F801-0997-4EAE-8F7C-41D90B224B61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19215C22-DBE9-4567-A4E4-FCBCDED21E1A}

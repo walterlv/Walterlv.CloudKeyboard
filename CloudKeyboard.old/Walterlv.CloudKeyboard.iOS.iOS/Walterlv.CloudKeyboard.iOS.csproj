@@ -156,7 +156,10 @@
       <Project>{F70F519C-49D8-4178-B05B-C4A0391D7C91}</Project>
       <Name>Walterlv.CloudKeyboard.iOS.Extension</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj">
+      <Project>{a2182b4a-a700-47be-8905-65e8c258b87e}</Project>
+      <Name>Walterlv.CloudKeyboard.Xaml</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="..\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems" Label="Shared" Condition="Exists('..\Walterlv.CloudKeyboard.iOS\Walterlv.CloudKeyboard.iOS.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

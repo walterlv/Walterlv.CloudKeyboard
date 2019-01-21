@@ -72,7 +72,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: walterlv@icloud.com (F53JH45N57)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -85,6 +85,7 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchVerbosity>
     </MtouchVerbosity>
+    <CodesignProvision>iOS Team Provisioning Profile: com.walterlv.CloudKeyboard.Keyboard</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

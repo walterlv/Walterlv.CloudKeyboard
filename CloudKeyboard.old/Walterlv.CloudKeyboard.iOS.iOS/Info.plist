@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>Walterlv.CloudKeyboard.iOS</string>
+	<string>CloudKeyboard</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.walterlv.CloudKeyboard</string>
 	<key>CFBundleVersion</key>
