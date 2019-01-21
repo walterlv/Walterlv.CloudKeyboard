@@ -5,12 +5,12 @@ namespace Walterlv.CloudTyping.Client
 {
     public class CloudKeyboardSender
     {
-        public CloudKeyboardSender(string baseUrl, Func<TypingText> typingGetter)
+        public CloudKeyboardSender(string baseUrl, string token, Func<TypingText> typingGetter)
         {
             _typingGetter = typingGetter;
             _baseUrl = baseUrl;
             _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.2), SendCore);
-            Token = "0";
+            Token = token;
         }
 
         public string Token
