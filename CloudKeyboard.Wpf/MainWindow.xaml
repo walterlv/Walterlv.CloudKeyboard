@@ -18,6 +18,56 @@
                                   ButtonHoverForeground="White" ButtonHoverBackground="#FF2A8AC3"
                                   ButtonPressedForeground="White" ButtonPressedBackground="#FF005A97" />
     </themes:UniversalWindowStyle.TitleBar>
+    <FrameworkElement.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#1570a6"/>
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="Stylus.IsTapFeedbackEnabled" Value="False" />
+            <Setter Property="Stylus.IsTouchFeedbackEnabled" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}" />
+                            <TextBlock x:Name="ContentTextBlock" Foreground="{TemplateBinding Foreground}"
+                                       FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <!-- When the pointer is over the button. -->
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True" />
+                        <Condition Property="IsStylusOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF2A8AC3" />
+                </MultiTrigger>
+                <!-- When the pointer is pressed. -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsPressed" Value="True" />
+                        <Condition Property="AreAnyTouchesOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF005A97" />
+                </MultiTrigger>
+                <!-- When the touch device is pressed. -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsPressed" Value="True" />
+                        <Condition Property="AreAnyTouchesOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF005A97" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </FrameworkElement.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120" />
@@ -87,7 +137,11 @@
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Content="确认" Click="EnterButton_Click"
-                    Focusable="False" IsDefault="True" />
+                    Focusable="False" IsDefault="True" BorderThickness="2">
+                <Button.BorderBrush>
+                    <effects:RevealBorderBrush Color="#FF88CAF1" />
+                </Button.BorderBrush>
+            </Button>
         </Grid>
     </Grid>
 </Window>
