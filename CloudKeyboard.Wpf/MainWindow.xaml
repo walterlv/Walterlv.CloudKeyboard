@@ -19,6 +19,19 @@
                                   ButtonPressedForeground="White" ButtonPressedBackground="#FF005A97" />
     </themes:UniversalWindowStyle.TitleBar>
     <FrameworkElement.Resources>
+        <Style x:Key="Style.TextBox.Accent" TargetType="TextBox">
+            <Setter Property="Foreground" Value="#A0FFFFFF" />
+            <Setter Property="Background" Value="#1570a6" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF2A8AC3" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="White" />
@@ -76,7 +89,8 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <TextBox x:Name="TypingTextBox" BorderThickness="0" BorderBrush="{x:Null}"
-                     Padding="12 16" FontSize="20" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"
+                     Padding="12 16" FontSize="20"
+                     TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"
                      TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
             <TextBlock x:Name="EmptyTipTextBlock" IsHitTestVisible="False"
                        Margin="12 16" FontSize="20" Foreground="#5F000000" VerticalAlignment="Top"
@@ -87,44 +101,37 @@
                        Margin="12 0" VerticalAlignment="Bottom" />
         </Grid>
         <Grid Grid.Row="0" Background="#1570a6" Focusable="False">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <UIElement.Effect>
                 <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
             </UIElement.Effect>
-            <TextBlock Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
-                       Margin="12" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Run Text="某人" />
-                <Run Text="的云键盘" />
-                <LineBreak />
-                <Run FontSize="5" />
-                <LineBreak />
-                <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
-            </TextBlock>
-            <TextBox x:Name="TokenTextBox" Margin="12" Padding="0" Height="32" MinWidth="160"
-                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                     VerticalContentAlignment="Center" BorderThickness="1" SnapsToDevicePixels="True"
-                     FontSize="20" FontFamily="Microsoft YaHei UI Light"
-                     LostFocus="TokenTextBox_LostFocus">
+            <TextBox x:Name="TokenTextBox" Grid.Row="1" Grid.Column="0"
+                     Margin="12 0 0 0" Padding="0 0 8 0" MinWidth="80"
+                     VerticalAlignment="Center" VerticalContentAlignment="Center"
+                     BorderThickness="1" SnapsToDevicePixels="True"
+                     FontSize="32" FontFamily="Microsoft YaHei UI Light"
+                     LostFocus="TokenTextBox_LostFocus"
+                     Style="{StaticResource Style.TextBox.Accent}">
                 <TextBox.BorderBrush>
                     <effects:RevealBorderBrush Color="#FF88CAF1" />
                 </TextBox.BorderBrush>
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Foreground" Value="#A0FFFFFF" />
-                        <Setter Property="Background" Value="#1570a6" />
-                        <Setter Property="HorizontalContentAlignment" Value="Right" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF2A8AC3" />
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="Foreground" Value="Black" />
-                                <Setter Property="Background" Value="White" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
             </TextBox>
-            <Border Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="4 0 0 0"
+                       Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
+                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Text="的云键盘" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="12 8 0 12"
+                       Foreground="#A0FFFFFF" FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                    Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
                 <Border.BorderBrush>
                     <effects:RevealBorderBrush Color="#FF88CAF1" />
                 </Border.BorderBrush>
