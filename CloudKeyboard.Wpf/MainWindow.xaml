@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:themes="clr-namespace:Walterlv.CloudTyping.Themes"
+        xmlns:utils="clr-namespace:Walterlv.CloudTyping.Utils"
         mc:Ignorable="d"
         Title="Walterlv CloudKeyboard" Height="450" Width="800"
         Activated="OnActivated"
@@ -25,6 +26,10 @@
             <TextBox x:Name="TypingTextBox" BorderThickness="0" BorderBrush="{x:Null}"
                      Padding="12 16" FontSize="20" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"
                      TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
+            <TextBlock x:Name="EmptyTipTextBlock" IsHitTestVisible="False"
+                       Margin="12 16" FontSize="20" Foreground="#5F000000" VerticalAlignment="Top"
+                       Text="在这里打字，将实时同步到你的 iPhone……"
+                       Visibility="{Binding Text, ElementName=TypingTextBox, Converter={utils:EmptyStringToVisibilityConverter True}}" />
             <TextBlock x:Name="ErrorTipTextBlock" Focusable="False" IsHitTestVisible="False"
                        FontSize="14" Foreground="#dd5145" FontFamily="Consolas, Microsoft YaHei"
                        Margin="12 0" VerticalAlignment="Bottom" />
@@ -46,7 +51,7 @@
         <Grid Grid.Row="2" Background="White" Focusable="False">
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"
                        Margin="12 0" VerticalAlignment="Center"
-                       Text="按下 Enter 确认，按下 Ctrl+Enter 输入回车。" />
+                       Text="按下 Enter 确认，按下 Ctrl+Enter 输入换行符。" />
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Content="Enter" Click="EnterButton_Click" IsDefault="True" />
