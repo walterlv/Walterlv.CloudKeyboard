@@ -3,15 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:themes="clr-namespace:Walterlv.CloudTyping.Themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Activated="OnActivated">
+        Title="Walterlv CloudKeyboard" Height="450" Width="800"
+        Activated="OnActivated"
+        Style="{StaticResource Style.Window.Universal}"
+        FontFamily="Microsoft YaHei">
+    <themes:UniversalWindowStyle.TitleBar>
+        <themes:UniversalTitleBar ForegroundColor="White" InactiveForegroundColor="#A6BEC7"
+                                  ButtonForegroundColor="White" ButtonInactiveForegroundColor="#999999"
+                                  ButtonHoverForeground="White" ButtonHoverBackground="#FF1F92E0"
+                                  ButtonPressedForeground="White" ButtonPressedBackground="#FF005A97" />
+    </themes:UniversalWindowStyle.TitleBar>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="120" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Border Background="#1570a6">
+            <TextBlock Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
+                       Margin="24 16" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Run Text="某人" />
+                <Run Text="的云键盘" />
+                <LineBreak />
+                <Run FontSize="5" />
+                <LineBreak />
+                <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
+            </TextBlock>
+
+        </Border>
         <Border Grid.Row="1" Grid.RowSpan="2" MinHeight="320" />
         <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
                  TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
