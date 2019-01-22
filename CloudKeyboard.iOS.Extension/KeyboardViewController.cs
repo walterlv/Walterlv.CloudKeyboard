@@ -35,59 +35,26 @@ namespace Walterlv.CloudTyping
         {
             base.ViewDidLoad();
 
-            // 初始化打字。
             var token = UIDevice.CurrentDevice.Name;
+
+            // 切换输入法按钮
+            nextKeyboardButton = CreateButtonToView(View, "Next Keyboard",
+                NSLayoutAttribute.Left, NSLayoutAttribute.Bottom);
+            nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
+
+            // Token 按钮
+            tokenButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
+                NSLayoutAttribute.CenterX, NSLayoutAttribute.CenterY);
+            
+            // 确认按钮
+            okButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
+                NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
+
+            // 初始化打字。
             var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
             receiver.Typing += DidReceive;
             receiver.Confirmed += DidConfirm;
             receiver.Start();
-
-            // Perform custom UI setup here
-            nextKeyboardButton = new UIButton(UIButtonType.System);
-
-            nextKeyboardButton.SetTitle("Next Keyboard", UIControlState.Normal);
-            nextKeyboardButton.SizeToFit();
-            nextKeyboardButton.TranslatesAutoresizingMaskIntoConstraints = false;
-
-            nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
-
-            View.AddSubview(nextKeyboardButton);
-
-            var nextKeyboardButtonLeftSideConstraint = NSLayoutConstraint.Create(nextKeyboardButton,
-                NSLayoutAttribute.Left, NSLayoutRelation.Equal, View, NSLayoutAttribute.Left, 1.0f, 0.0f);
-            var nextKeyboardButtonBottomConstraint = NSLayoutConstraint.Create(nextKeyboardButton,
-                NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1.0f, 0.0f);
-            View.AddConstraints(new[] {nextKeyboardButtonLeftSideConstraint, nextKeyboardButtonBottomConstraint});
-
-            // Token 按钮
-            tokenButton = new UIButton(UIButtonType.RoundedRect);
-
-            tokenButton.SetTitle($"使用此文本设置你的 PC 键盘：{token}", UIControlState.Normal);
-            tokenButton.SizeToFit();
-            tokenButton.TranslatesAutoresizingMaskIntoConstraints = false;
-
-            View.AddSubview(tokenButton);
-
-            var tokenButtonCenterXConstraint = NSLayoutConstraint.Create(tokenButton,
-                NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterX, 1.0f, 0.0f);
-            var tokenButtonCenterYConstraint = NSLayoutConstraint.Create(tokenButton,
-                NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, View, NSLayoutAttribute.CenterY, 1.0f, 0.0f);
-            View.AddConstraints(new[] {tokenButtonCenterXConstraint, tokenButtonCenterYConstraint});
-
-            // 确认按钮
-            okButton = new UIButton(UIButtonType.System);
-
-            okButton.SetTitle(TextDocumentProxy.ReturnKeyType.ToString(), UIControlState.Normal);
-            okButton.SizeToFit();
-            okButton.TranslatesAutoresizingMaskIntoConstraints = false;
-
-            View.AddSubview(okButton);
-
-            var okButtonCenterXConstraint = NSLayoutConstraint.Create(okButton,
-                NSLayoutAttribute.Right, NSLayoutRelation.Equal, View, NSLayoutAttribute.Right, 1.0f, 0.0f);
-            var okButtonCenterYConstraint = NSLayoutConstraint.Create(okButton,
-                NSLayoutAttribute.Bottom, NSLayoutRelation.Equal, View, NSLayoutAttribute.Bottom, 1.0f, 0.0f);
-            View.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
         }
 
         public override void TextWillChange(IUITextInput textInput)
@@ -131,6 +98,26 @@ namespace Walterlv.CloudTyping
 
             TextDocumentProxy.InsertText(e.Typing.Text);
             base.TextDocumentProxy.InsertText("\n");
+        }
+
+        private UIButton CreateButtonToView(UIView view, string title,
+            NSLayoutAttribute horizontalAlignment, NSLayoutAttribute verticalAlignment)
+        {
+            var button = new UIButton(UIButtonType.System);
+
+            button.SetTitle(title, UIControlState.Normal);
+            button.SizeToFit();
+            button.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            view.AddSubview(button);
+
+            var okButtonCenterXConstraint = NSLayoutConstraint.Create(button,
+                horizontalAlignment, NSLayoutRelation.Equal, view, horizontalAlignment, 1.0f, 0.0f);
+            var okButtonCenterYConstraint = NSLayoutConstraint.Create(button,
+                verticalAlignment, NSLayoutRelation.Equal, view, verticalAlignment, 1.0f, 0.0f);
+            view.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
+
+            return button;
         }
     }
 }
