@@ -6,14 +6,15 @@
         xmlns:themes="clr-namespace:Walterlv.CloudTyping.Themes"
         xmlns:utils="clr-namespace:Walterlv.CloudTyping.Utils"
         mc:Ignorable="d"
-        Title="Walterlv CloudKeyboard" Height="450" Width="800"
+        Title="Walterlv CloudKeyboard"
+        Height="450" Width="800" MinWidth="500" MinHeight="320"
         Activated="OnActivated"
         Style="{StaticResource Style.Window.Universal}"
         FontFamily="Microsoft YaHei">
     <themes:UniversalWindowStyle.TitleBar>
         <themes:UniversalTitleBar ForegroundColor="White" InactiveForegroundColor="#A6BEC7"
                                   ButtonForegroundColor="White" ButtonInactiveForegroundColor="#999999"
-                                  ButtonHoverForeground="White" ButtonHoverBackground="#FF1F92E0"
+                                  ButtonHoverForeground="White" ButtonHoverBackground="#FF2A8AC3"
                                   ButtonPressedForeground="White" ButtonPressedBackground="#FF005A97" />
     </themes:UniversalWindowStyle.TitleBar>
     <Grid>
@@ -34,7 +35,7 @@
                        FontSize="14" Foreground="#dd5145" FontFamily="Consolas, Microsoft YaHei"
                        Margin="12 0" VerticalAlignment="Bottom" />
         </Grid>
-        <Border Grid.Row="0" Background="#1570a6" Focusable="False">
+        <Grid Grid.Row="0" Background="#1570a6" Focusable="False">
             <UIElement.Effect>
                 <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
             </UIElement.Effect>
@@ -47,7 +48,28 @@
                 <LineBreak />
                 <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
             </TextBlock>
-        </Border>
+            <TextBox Margin="12" Padding="0" Height="32" MinWidth="160" BorderThickness="0"
+                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                     VerticalContentAlignment="Center"
+                     Text="walterlv" FontSize="20" FontFamily="Microsoft YaHei UI Light">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Foreground" Value="#A0FFFFFF" />
+                        <Setter Property="Background" Value="#1570a6" />
+                        <Setter Property="HorizontalContentAlignment" Value="Right" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF2A8AC3" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </Grid>
         <Grid Grid.Row="2" Background="White" Focusable="False">
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"
                        Margin="12 0" VerticalAlignment="Center"
