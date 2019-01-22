@@ -8,6 +8,7 @@ namespace Walterlv.CloudTyping
     public partial class KeyboardViewController : UIInputViewController
     {
         UIButton nextKeyboardButton;
+        UIButton debugButton;
         UIButton tokenButton;
         UIButton okButton;
 
@@ -37,15 +38,19 @@ namespace Walterlv.CloudTyping
 
             var token = UIDevice.CurrentDevice.Name;
 
-            // 切换输入法按钮
-            nextKeyboardButton = CreateButtonToView(View, "Next Keyboard",
-                NSLayoutAttribute.Left, NSLayoutAttribute.Bottom);
-            nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
+            // 调试按钮
+            debugButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
+                NSLayoutAttribute.CenterX, NSLayoutAttribute.Top);
 
             // Token 按钮
             tokenButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
                 NSLayoutAttribute.CenterX, NSLayoutAttribute.CenterY);
             
+            // 切换输入法按钮
+            nextKeyboardButton = CreateButtonToView(View, "Next Keyboard",
+                NSLayoutAttribute.Left, NSLayoutAttribute.Bottom);
+            nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
+
             // 确认按钮
             okButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
                 NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
@@ -77,6 +82,7 @@ namespace Walterlv.CloudTyping
             }
 
             nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
+            tokenButton.SetTitleColor(textColor, UIControlState.Normal);
         }
 
         private void DidReceive(object sender, TypingTextEventArgs e)
