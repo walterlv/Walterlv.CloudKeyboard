@@ -86,7 +86,8 @@
                        Text="按下 Enter 确认，按下 Ctrl+Enter 输入换行符。" />
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Content="Enter" Click="EnterButton_Click" IsDefault="True" />
+                    Content="确认" Click="EnterButton_Click"
+                    Focusable="False" IsDefault="True" />
         </Grid>
     </Grid>
 </Window>

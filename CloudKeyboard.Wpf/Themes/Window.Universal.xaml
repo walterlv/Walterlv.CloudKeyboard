@@ -33,6 +33,7 @@
                             <Grid x:Name="TitleBarPanel" VerticalAlignment="Top" Height="31">
                                 <FrameworkElement.Resources>
                                     <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Focusable" Value="False" />
                                         <Setter Property="Width" Value="46"/>
                                         <Setter Property="BorderThickness" Value="0" />
                                         <Setter Property="Foreground" Value="{StaticResource Brush.TitleBar.ButtonForeground}" />
