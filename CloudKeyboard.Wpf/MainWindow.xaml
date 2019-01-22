@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:themes="clr-namespace:Walterlv.CloudTyping.Themes"
         xmlns:utils="clr-namespace:Walterlv.CloudTyping.Utils"
+        xmlns:effects="clr-namespace:Walterlv.CloudTyping.Effects"
         mc:Ignorable="d"
         Title="Walterlv CloudKeyboard"
         Height="450" Width="800" MinWidth="500" MinHeight="320"
@@ -48,11 +49,14 @@
                 <LineBreak />
                 <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
             </TextBlock>
-            <TextBox x:Name="TokenTextBox" Margin="12" Padding="0" Height="32" MinWidth="160" BorderThickness="0"
+            <TextBox x:Name="TokenTextBox" Margin="12" Padding="0" Height="32" MinWidth="160"
                      HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                     VerticalContentAlignment="Center"
+                     VerticalContentAlignment="Center" BorderThickness="1" SnapsToDevicePixels="True"
                      FontSize="20" FontFamily="Microsoft YaHei UI Light"
                      LostFocus="TokenTextBox_LostFocus">
+                <TextBox.BorderBrush>
+                    <effects:RevealBorderBrush Color="#FF88CAF1" />
+                </TextBox.BorderBrush>
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="Foreground" Value="#A0FFFFFF" />
@@ -70,6 +74,11 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
+            <Border Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
+                <Border.BorderBrush>
+                    <effects:RevealBorderBrush Color="#FF88CAF1" />
+                </Border.BorderBrush>
+            </Border>
         </Grid>
         <Grid Grid.Row="2" Background="White" Focusable="False">
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"

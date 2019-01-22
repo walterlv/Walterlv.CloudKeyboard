@@ -47,7 +47,7 @@ namespace Walterlv.CloudTyping.Effects
 
         private Brush CreateBrush(Window window, FrameworkElement element)
         {
-            var brush = new RadialGradientBrush(Colors.White, Colors.Transparent)
+            var brush = new RadialGradientBrush(Color, Colors.Transparent)
             {
                 MappingMode = BrushMappingMode.Absolute,
                 RadiusX = Radius,
