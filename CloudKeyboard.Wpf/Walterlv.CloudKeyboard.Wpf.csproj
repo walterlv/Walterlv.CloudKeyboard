@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Walterlv.CloudTyping.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
@@ -57,6 +60,7 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Program.cs" />
     <Compile Include="Utils\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="Themes\Window.Universal.xaml.cs">
       <DependentUpon>Window.Universal.xaml</DependentUpon>
