@@ -100,43 +100,45 @@
                        FontSize="14" Foreground="#dd5145" FontFamily="Consolas, Microsoft YaHei"
                        Margin="12 0" VerticalAlignment="Bottom" />
         </Grid>
-        <Grid Grid.Row="0" Background="#1570a6" Focusable="False">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <UIElement.Effect>
-                <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
-            </UIElement.Effect>
-            <TextBox x:Name="TokenTextBox" Grid.Row="1" Grid.Column="0"
-                     Margin="12 0 0 0" Padding="0 0 8 0" MinWidth="80"
-                     VerticalAlignment="Center" VerticalContentAlignment="Center"
-                     BorderThickness="1" SnapsToDevicePixels="True"
-                     FontSize="32" FontFamily="Microsoft YaHei UI Light"
-                     LostFocus="TokenTextBox_LostFocus"
-                     Style="{StaticResource Style.TextBox.Accent}">
-                <TextBox.BorderBrush>
-                    <effects:RevealBorderBrush Color="#FF88CAF1" />
-                </TextBox.BorderBrush>
-            </TextBox>
-            <TextBlock Grid.Row="1" Grid.Column="1" Margin="4 0 0 0"
-                       Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
-                       HorizontalAlignment="Left" VerticalAlignment="Center"
-                       Text="的云键盘" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="12 8 0 12"
-                       Foreground="#A0FFFFFF" FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                    Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
-                <Border.BorderBrush>
-                    <effects:RevealBorderBrush Color="#FF88CAF1" />
-                </Border.BorderBrush>
-            </Border>
-        </Grid>
+        <Border Grid.Row="0" Margin="0 0 0 -16" ClipToBounds="True">
+            <Grid Background="#1570a6" Margin="0 0 0 16" Focusable="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <UIElement.Effect>
+                    <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
+                </UIElement.Effect>
+                <TextBox x:Name="TokenTextBox" Grid.Row="1" Grid.Column="0"
+                         Margin="12 0 0 0" Padding="0 0 8 0" MinWidth="80"
+                         VerticalAlignment="Center" VerticalContentAlignment="Center"
+                         BorderThickness="1" SnapsToDevicePixels="True"
+                         FontSize="32" FontFamily="Microsoft YaHei UI Light"
+                         LostFocus="TokenTextBox_LostFocus"
+                         Style="{StaticResource Style.TextBox.Accent}">
+                    <TextBox.BorderBrush>
+                        <effects:RevealBorderBrush Color="#FF88CAF1" />
+                    </TextBox.BorderBrush>
+                </TextBox>
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="4 0 0 0"
+                           Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                           Text="的云键盘" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="12 8 0 12"
+                           Foreground="#A0FFFFFF" FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                        Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
+                    <Border.BorderBrush>
+                        <effects:RevealBorderBrush Color="#FF88CAF1" />
+                    </Border.BorderBrush>
+                </Border>
+            </Grid>
+        </Border>
         <Grid Grid.Row="2" Background="White" Focusable="False">
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"
                        Margin="12 0" VerticalAlignment="Center"
