@@ -59,6 +59,7 @@ namespace Walterlv.CloudTyping
             var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
             receiver.Typing += DidReceive;
             receiver.Confirmed += DidConfirm;
+            receiver.ExceptionOccurred += ExceptionDidOccur;
             receiver.Start();
         }
 
@@ -104,6 +105,13 @@ namespace Walterlv.CloudTyping
 
             TextDocumentProxy.InsertText(e.Typing.Text);
             base.TextDocumentProxy.InsertText("\n");
+        }
+
+        private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
+        {
+            debugButton.SetTitle(e.Exception.ToString(), UIControlState.Normal);
+            debugButton.SizeToFit();
+            debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private UIButton CreateButtonToView(UIView view, string title,
