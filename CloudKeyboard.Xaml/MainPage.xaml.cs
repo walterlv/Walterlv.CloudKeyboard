@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Walterlv.CloudKeyboard
+namespace Walterlv.CloudTyping
 {
     public partial class MainPage : ContentPage
     {

@@ -3,7 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-namespace Walterlv.CloudKeyboard
+namespace Walterlv.CloudTyping
 {
     public partial class App : Application
     {

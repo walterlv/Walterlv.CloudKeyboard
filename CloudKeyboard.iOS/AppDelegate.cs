@@ -1,6 +1,5 @@
 ﻿using Foundation;
 using UIKit;
-using Walterlv.CloudKeyboard;
 
 namespace Walterlv.CloudTyping
 {
