@@ -21,7 +21,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border Background="#1570a6">
+        <Border Grid.Row="1" Grid.RowSpan="2" MinHeight="320" />
+        <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
+                 TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
+        <Button x:Name="EnterButton" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+                Content="Enter" Click="EnterButton_Click" IsDefault="True" />
+        <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
+        <Border Grid.Row="0" Background="#1570a6">
+            <UIElement.Effect>
+                <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
+            </UIElement.Effect>
             <TextBlock Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
                        Margin="24 16" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <Run Text="某人" />
@@ -31,13 +40,6 @@
                 <LineBreak />
                 <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
             </TextBlock>
-
         </Border>
-        <Border Grid.Row="1" Grid.RowSpan="2" MinHeight="320" />
-        <TextBox x:Name="TypingTextBox" Grid.Row="1" MinHeight="160"
-                 TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
-        <Button x:Name="EnterButton" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"
-                Content="Enter" Click="EnterButton_Click" IsDefault="True" />
-        <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
     </Grid>
 </Window>
