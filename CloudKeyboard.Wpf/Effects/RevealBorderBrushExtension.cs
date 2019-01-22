@@ -55,6 +55,7 @@ namespace Walterlv.CloudTyping.Effects
                 Opacity = Opacity,
                 Transform = Transform,
                 RelativeTransform = RelativeTransform,
+                Center = new Point(double.NegativeInfinity, double.NegativeInfinity),
             };
             window.MouseMove += OnMouseMove;
             window.Closed += OnClosed;
