@@ -12,6 +12,7 @@ namespace Walterlv.CloudTyping
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
 
             var token = GetTokenFromConfigs();
             _sender = new CloudKeyboardSender(HostInfo.BaseUrl, token, () => new TypingText(
@@ -19,6 +20,11 @@ namespace Walterlv.CloudTyping
                 TypingTextBox.SelectionStart + TypingTextBox.SelectionLength));
             _sender.TargetUpdated += OnTargetUpdated;
             _sender.ExceptionOccurred += OnExceptionOccurred;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            TypingTextBox.Focus();
         }
 
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
