@@ -13,6 +13,7 @@ namespace Walterlv.CloudTyping.Client
 
         public event EventHandler<TypingTextEventArgs> Typing;
         public event EventHandler<TypingTextEventArgs> Confirmed;
+        public event EventHandler<ExceptionEventArgs> ExceptionOccurred;
 
         public async void Start()
         {
@@ -25,23 +26,30 @@ namespace Walterlv.CloudTyping.Client
 
             while (_isRunning)
             {
-                var typing = await _keyboard.FetchTextAsync();
+                try
+                {
+                    var typing = await _keyboard.FetchTextAsync();
 
-                if (typing.Enter)
-                {
-                    _lastTyping = typing;
-                    Confirmed?.Invoke(this, new TypingTextEventArgs(typing));
-                }
-                else
-                {
-                    var isEqual = _lastTyping != null && _lastTyping.Text == typing.Text
-                                                      && _lastTyping.CaretStartIndex == typing.CaretStartIndex
-                                                      && _lastTyping.CaretEndIndex == typing.CaretEndIndex;
-                    _lastTyping = typing;
-                    if (!isEqual)
+                    if (typing.Enter)
                     {
-                        Typing?.Invoke(this, new TypingTextEventArgs(typing));
+                        _lastTyping = typing;
+                        Confirmed?.Invoke(this, new TypingTextEventArgs(typing));
                     }
+                    else
+                    {
+                        var isEqual = _lastTyping != null && _lastTyping.Text == typing.Text
+                                                          && _lastTyping.CaretStartIndex == typing.CaretStartIndex
+                                                          && _lastTyping.CaretEndIndex == typing.CaretEndIndex;
+                        _lastTyping = typing;
+                        if (!isEqual)
+                        {
+                            Typing?.Invoke(this, new TypingTextEventArgs(typing));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionOccurred?.Invoke(this, new ExceptionEventArgs(ex));
                 }
 
                 await Task.Delay(500);
