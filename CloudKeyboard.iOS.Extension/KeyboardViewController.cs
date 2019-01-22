@@ -10,7 +10,7 @@ namespace Walterlv.CloudTyping
         private UIButton _nextKeyboardButton;
         private UIButton _debugButton;
         private UIButton _tokenButton;
-        private UIButton _okButton;
+        private UIButton _returnButton;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -52,7 +52,7 @@ namespace Walterlv.CloudTyping
             _nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
 
             // 确认按钮
-            _okButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
+            _returnButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
                 NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
 
             // 初始化打字。
@@ -85,6 +85,10 @@ namespace Walterlv.CloudTyping
             _nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
             _tokenButton.SetTitleColor(textColor, UIControlState.Normal);
             _debugButton.SetTitleColor(textColor, UIControlState.Normal);
+
+            _returnButton.SetTitle(TextDocumentProxy.ReturnKeyType.ToString(), UIControlState.Normal);
+            _returnButton.SizeToFit();
+            _returnButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private void DidReceive(object sender, TypingTextEventArgs e)
