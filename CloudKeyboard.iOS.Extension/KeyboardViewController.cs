@@ -39,7 +39,7 @@ namespace Walterlv.CloudTyping
             var token = UIDevice.CurrentDevice.Name;
 
             // 调试按钮
-            _debugButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
+            _debugButton = CreateButtonToView(View, "...",
                 NSLayoutAttribute.CenterX, NSLayoutAttribute.Top);
 
             // Token 按钮
@@ -84,6 +84,7 @@ namespace Walterlv.CloudTyping
 
             _nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
             _tokenButton.SetTitleColor(textColor, UIControlState.Normal);
+            _debugButton.SetTitleColor(textColor, UIControlState.Normal);
         }
 
         private void DidReceive(object sender, TypingTextEventArgs e)
