@@ -39,7 +39,9 @@
                 <Run FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
             </TextBlock>
         </Border>
-        <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="2" Visibility="Collapsed" />
+        <TextBlock x:Name="ErrorTipTextBlock" Grid.Row="1" IsHitTestVisible="False"
+                   FontSize="14" Foreground="#dd5145" FontFamily="Consolas, Microsoft YaHei"
+                   Margin="12 0" VerticalAlignment="Bottom" />
         <Button x:Name="EnterButton" Grid.Row="2" MinWidth="120" Height="32"
                 Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                 Content="Enter" Click="EnterButton_Click" IsDefault="True" />

@@ -54,7 +54,6 @@ namespace Walterlv.CloudTyping
         {
             await TypingTextBox.Dispatcher.InvokeAsync(() =>
             {
-                ErrorTipTextBlock.Visibility = Visibility;
                 ErrorTipTextBlock.Text = e.Exception.ToString();
             });
         }
