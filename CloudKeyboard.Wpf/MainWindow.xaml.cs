@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Walterlv.CloudTyping.Client;
 
 namespace Walterlv.CloudTyping
@@ -32,6 +34,33 @@ namespace Walterlv.CloudTyping
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             _sender.Send();
+        }
+
+        private void TypingTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && !e.IsRepeat)
+            {
+                e.Handled = true;
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+                {
+                    var oldText = TypingTextBox.Text;
+                    var selectionStart = TypingTextBox.SelectionStart;
+
+                    var builder = new StringBuilder();
+                    builder.Append(oldText.Substring(0, selectionStart));
+                    builder.AppendLine();
+                    builder.Append(oldText.Substring(selectionStart + TypingTextBox.SelectionLength));
+                    TypingTextBox.Text = builder.ToString();
+
+                    TypingTextBox.SelectionStart = selectionStart + Environment.NewLine.Length;
+                    TypingTextBox.SelectionLength = 0;
+                }
+                else
+                {
+                    _sender.Send(true);
+                    TypingTextBox.Text = "";
+                }
+            }
         }
 
         private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
