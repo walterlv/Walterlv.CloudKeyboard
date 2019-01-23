@@ -142,6 +142,7 @@ namespace Walterlv.CloudTyping
 
             button.SetTitle(title, UIControlState.Normal);
             button.SizeToFit();
+            button.TranslatesAutoresizingMaskIntoConstraints = false;
 
             view.AddSubview(button);
 
