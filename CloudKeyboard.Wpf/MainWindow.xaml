@@ -89,14 +89,14 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <TextBox x:Name="TypingTextBox" BorderThickness="0" BorderBrush="{x:Null}"
-                     Padding="12 16" FontSize="20" AcceptsReturn="True" MaxLength="4096"
+                     Padding="12 16 12 0" FontSize="20" AcceptsReturn="True" MaxLength="4096"
                      TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"
                      PreviewKeyDown="TypingTextBox_PreviewKeyDown"
                      TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
             <TextBlock x:Name="EmptyTipTextBlock" IsHitTestVisible="False"
                        Margin="12 16" FontSize="20" Foreground="#5F000000" VerticalAlignment="Top"
                        Text="在这里打字，将实时同步到你的 iPhone……"
-                       Visibility="{Binding Text, ElementName=TypingTextBox, Converter={utils:EmptyStringToVisibilityConverter True}}" />
+                       Visibility="{Binding Text, Source={x:Reference TypingTextBox}, Converter={utils:EmptyStringToVisibilityConverter True}}" />
             <TextBlock x:Name="ErrorTipTextBlock" Focusable="False" IsHitTestVisible="False"
                        FontSize="14" Foreground="#dd5145" FontFamily="Consolas, Microsoft YaHei"
                        Margin="12 0" VerticalAlignment="Bottom" />
@@ -144,6 +144,11 @@
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"
                        Margin="12 0" VerticalAlignment="Center"
                        Text="按下 Enter 确认，按下 Ctrl+Enter 输入换行符。" />
+            <Border Background="White">
+                <TextBlock x:Name="WarningTextBlock" IsHitTestVisible="False"
+                           Foreground="#dd5145" Margin="12 0" VerticalAlignment="Center"
+                           Visibility="{Binding Text, ElementName=WarningTextBlock, Converter={utils:EmptyStringToVisibilityConverter}}"/>
+            </Border>
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Content="确认" Click="EnterButton_Click"

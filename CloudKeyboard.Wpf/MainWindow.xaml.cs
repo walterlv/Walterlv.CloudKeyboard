@@ -34,6 +34,7 @@ namespace Walterlv.CloudTyping
         private void TypingTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             _sender.Send();
+            UpdateCharacterInputLeftInfo();
         }
 
         private void TypingTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -54,6 +55,12 @@ namespace Walterlv.CloudTyping
 
             void InsertNewLine()
             {
+                var characterInputLeft = TypingTextBox.MaxLength - TypingTextBox.Text.Length;
+                if (characterInputLeft < 2)
+                {
+                    return;
+                }
+
                 var oldText = TypingTextBox.Text;
                 var selectionStart = TypingTextBox.SelectionStart;
 
@@ -107,6 +114,23 @@ namespace Walterlv.CloudTyping
             {
                 _sender.Token = editedToken;
                 SetTokenToConfigs(editedToken);
+            }
+        }
+
+        private void UpdateCharacterInputLeftInfo()
+        {
+            var characterInputLeft = TypingTextBox.MaxLength - TypingTextBox.Text.Length;
+            if (characterInputLeft <= 200)
+            {
+                WarningTextBlock.Text = $"你还可以再输入 {characterInputLeft.ToString()} 个字……";
+            }
+            else if (characterInputLeft <= 0)
+            {
+                WarningTextBlock.Text = "你输入的字已经够多了……";
+            }
+            else
+            {
+                WarningTextBlock.Text = "";
             }
         }
 
