@@ -14,6 +14,9 @@ namespace Walterlv.CloudTyping
         private UIButton _debugButton;
         private UIButton _tokenButton;
         private UIButton _returnButton;
+        private int _receivedCount;
+        private int _totalReceivedCount;
+        private int _changedCount;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -96,13 +99,23 @@ namespace Walterlv.CloudTyping
 
         private void DidReceive(object sender, TypingTextEventArgs e)
         {
+            _receivedCount++;
+            _totalReceivedCount++;
+
             Input(e.Typing.Text);
+
+            UpdateCounts();
         }
 
         private void DidConfirm(object sender, TypingTextEventArgs e)
         {
+            _receivedCount = 0;
+            _totalReceivedCount++;
+
             Input(e.Typing.Text);
             Input("\n");
+
+            UpdateCounts();
         }
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
@@ -130,6 +143,13 @@ namespace Walterlv.CloudTyping
             view.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
 
             return button;
+        }
+
+        private void UpdateCounts()
+        {
+            _debugButton.SetTitle($"{_totalReceivedCount}-{_receivedCount}-{_changedCount}", UIControlState.Normal);
+            _debugButton.SizeToFit();
+            _debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private string _lastText;
@@ -160,7 +180,7 @@ namespace Walterlv.CloudTyping
                     var next = _inputingTexts.Peek();
                     if (current == "\n")
                     {
-                        TextDocumentProxy.InsertText(text);
+                        TextDocumentProxy.InsertText("\n");
                         await Task.Delay(100);
                     }
                     else if (next == "\n")
@@ -179,10 +199,13 @@ namespace Walterlv.CloudTyping
                     await Task.Delay(100);
                 }
             }
+
+            UpdateCounts();
         }
 
         private void SetText(string text)
         {
+            _changedCount++;
             while (TextDocumentProxy.HasText)
             {
                 TextDocumentProxy.DeleteBackward();
