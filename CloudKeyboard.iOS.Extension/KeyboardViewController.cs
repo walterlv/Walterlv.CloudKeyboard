@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ObjCRuntime;
 using UIKit;
@@ -94,24 +96,13 @@ namespace Walterlv.CloudTyping
 
         private void DidReceive(object sender, TypingTextEventArgs e)
         {
-            while (TextDocumentProxy.HasText)
-            {
-                TextDocumentProxy.DeleteBackward();
-            }
-
-            TextDocumentProxy.InsertText(e.Typing.Text);
+            Input(e.Typing.Text);
         }
 
-        private async void DidConfirm(object sender, TypingTextEventArgs e)
+        private void DidConfirm(object sender, TypingTextEventArgs e)
         {
-            while (TextDocumentProxy.HasText)
-            {
-                TextDocumentProxy.DeleteBackward();
-            }
-
-            TextDocumentProxy.InsertText(e.Typing.Text);
-            await Task.Delay(100);
-            TextDocumentProxy.InsertText("\n");
+            Input(e.Typing.Text);
+            Input("\n");
         }
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
@@ -139,6 +130,52 @@ namespace Walterlv.CloudTyping
             view.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
 
             return button;
+        }
+
+        private readonly Queue<string> _inputingTexts = new Queue<string>();
+
+        private async void Input(string text)
+        {
+            if (_inputingTexts.Any())
+            {
+                _inputingTexts.Enqueue(text);
+                return;
+            }
+
+            _inputingTexts.Enqueue(text);
+
+            while (_inputingTexts.Any())
+            {
+                var current = _inputingTexts.Dequeue();
+                if (_inputingTexts.Any())
+                {
+                    var next = _inputingTexts.Peek();
+                    if (current == "\n" || next == "\n")
+                    {
+                        SetText(current);
+                        await Task.Delay(100);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    SetText(current);
+                    await Task.Delay(100);
+                }
+            }
+        }
+
+        private void SetText(string text)
+        {
+            while (TextDocumentProxy.HasText)
+            {
+                TextDocumentProxy.DeleteBackward();
+            }
+
+            TextDocumentProxy.InsertText(text);
         }
     }
 }
