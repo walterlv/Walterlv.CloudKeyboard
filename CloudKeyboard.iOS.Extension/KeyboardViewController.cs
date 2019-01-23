@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ObjCRuntime;
 using UIKit;
 using Walterlv.CloudTyping.Client;
@@ -101,7 +102,7 @@ namespace Walterlv.CloudTyping
             TextDocumentProxy.InsertText(e.Typing.Text);
         }
 
-        private void DidConfirm(object sender, TypingTextEventArgs e)
+        private async void DidConfirm(object sender, TypingTextEventArgs e)
         {
             while (TextDocumentProxy.HasText)
             {
@@ -109,7 +110,8 @@ namespace Walterlv.CloudTyping
             }
 
             TextDocumentProxy.InsertText(e.Typing.Text);
-            base.TextDocumentProxy.InsertText("\n");
+            await Task.Delay(1);
+            TextDocumentProxy.InsertText("\n");
         }
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
