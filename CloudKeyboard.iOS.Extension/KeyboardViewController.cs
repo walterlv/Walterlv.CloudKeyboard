@@ -130,7 +130,17 @@ namespace Walterlv.CloudTyping
                 return;
             }
 
-            _debugButton.SetTitle(e.Exception.ToString(), UIControlState.Normal);
+            string info;
+            if (e.Exception is NullReferenceException nre)
+            {
+                info = $"null:{nre.StackTrace}";
+            }
+            else
+            {
+                info = $"{e.Exception.GetType().Name.Replace("Exception", "")}:{e.Exception.StackTrace}";
+            }
+
+            _debugButton.SetTitle(info, UIControlState.Normal);
             _debugButton.SizeToFit();
             _debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
