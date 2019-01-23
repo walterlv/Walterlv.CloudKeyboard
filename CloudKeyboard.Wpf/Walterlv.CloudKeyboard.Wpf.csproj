@@ -66,6 +66,7 @@
     <Compile Include="Themes\Window.Universal.xaml.cs">
       <DependentUpon>Window.Universal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ThreadExecution.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
