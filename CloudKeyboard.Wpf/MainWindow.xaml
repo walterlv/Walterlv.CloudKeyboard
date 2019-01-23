@@ -147,7 +147,7 @@
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Content="确认" Click="EnterButton_Click"
-                    Focusable="False" IsDefault="True" BorderThickness="2">
+                    Focusable="False" BorderThickness="2">
                 <Button.BorderBrush>
                     <effects:RevealBorderBrush Color="#FF88CAF1" />
                 </Button.BorderBrush>
