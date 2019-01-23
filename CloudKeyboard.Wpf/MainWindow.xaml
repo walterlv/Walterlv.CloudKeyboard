@@ -115,7 +115,7 @@
                     <DropShadowEffect BlurRadius="16" RenderingBias="Performance" ShadowDepth="0" />
                 </UIElement.Effect>
                 <TextBox x:Name="TokenTextBox" Grid.Row="1" Grid.Column="0"
-                         Margin="12 0 0 0" Padding="0 0 8 0" MinWidth="80"
+                         Margin="10 0 0 0" Padding="0 0 8 0" MinWidth="80"
                          VerticalAlignment="Center" VerticalContentAlignment="Center"
                          BorderThickness="1" SnapsToDevicePixels="True"
                          FontSize="32" FontFamily="Microsoft YaHei UI Light"
@@ -129,7 +129,7 @@
                            Foreground="#A0FFFFFF" FontSize="32" FontFamily="Microsoft YaHei UI Light"
                            HorizontalAlignment="Left" VerticalAlignment="Center"
                            Text="的云键盘" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="12 8 0 12"
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="12 3 12 12"
                            Foreground="#A0FFFFFF" FontSize="14" Text="请在你的 iPhone 中将设备切换至 Cloud 输入法" />
                 <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                         Height="8" BorderThickness="0 0 0 1" SnapsToDevicePixels="True" VerticalAlignment="Bottom">
