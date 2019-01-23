@@ -74,6 +74,12 @@ namespace Walterlv.CloudTyping
             }
         }
 
+        public override void ViewDidUnload()
+        {
+            _receiver?.Stop();
+            base.ViewDidUnload();
+        }
+
         public override void TextWillChange(IUITextInput textInput)
         {
             // The app is about to change the document's contents. Perform any preparation here.
