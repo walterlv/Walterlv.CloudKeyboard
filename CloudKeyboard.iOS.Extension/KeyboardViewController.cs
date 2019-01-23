@@ -132,10 +132,18 @@ namespace Walterlv.CloudTyping
             return button;
         }
 
+        private string _lastText;
         private readonly Queue<string> _inputingTexts = new Queue<string>();
 
         private async void Input(string text)
         {
+            if (text == _lastText)
+            {
+                return;
+            }
+
+            _lastText = text;
+
             if (_inputingTexts.Any())
             {
                 _inputingTexts.Enqueue(text);
