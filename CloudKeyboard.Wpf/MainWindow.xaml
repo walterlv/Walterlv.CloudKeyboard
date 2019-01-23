@@ -89,7 +89,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <TextBox x:Name="TypingTextBox" BorderThickness="0" BorderBrush="{x:Null}"
-                     Padding="12 16" FontSize="20" AcceptsReturn="True"
+                     Padding="12 16" FontSize="20" AcceptsReturn="True" MaxLength="4096"
                      TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"
                      PreviewKeyDown="TypingTextBox_PreviewKeyDown"
                      TextChanged="TypingTextBox_TextChanged" SelectionChanged="TypingTextBox_SelectionChanged" />
