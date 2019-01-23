@@ -141,7 +141,7 @@ namespace Walterlv.CloudTyping
             {
                 return;
             }
-
+                
             _lastText = text;
 
             if (_inputingTexts.Any())
@@ -158,7 +158,12 @@ namespace Walterlv.CloudTyping
                 if (_inputingTexts.Any())
                 {
                     var next = _inputingTexts.Peek();
-                    if (current == "\n" || next == "\n")
+                    if (current == "\n")
+                    {
+                        TextDocumentProxy.InsertText(text);
+                        await Task.Delay(100);
+                    }
+                    else if (next == "\n")
                     {
                         SetText(current);
                         await Task.Delay(100);
