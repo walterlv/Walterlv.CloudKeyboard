@@ -43,17 +43,7 @@ namespace Walterlv.CloudTyping
                 e.Handled = true;
                 if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                 {
-                    var oldText = TypingTextBox.Text;
-                    var selectionStart = TypingTextBox.SelectionStart;
-
-                    var builder = new StringBuilder();
-                    builder.Append(oldText.Substring(0, selectionStart));
-                    builder.AppendLine();
-                    builder.Append(oldText.Substring(selectionStart + TypingTextBox.SelectionLength));
-                    TypingTextBox.Text = builder.ToString();
-
-                    TypingTextBox.SelectionStart = selectionStart + Environment.NewLine.Length;
-                    TypingTextBox.SelectionLength = 0;
+                    InsertNewLine();
                 }
                 else
                 {
@@ -61,12 +51,24 @@ namespace Walterlv.CloudTyping
                     TypingTextBox.Text = "";
                 }
             }
+
+            void InsertNewLine()
+            {
+                var oldText = TypingTextBox.Text;
+                var selectionStart = TypingTextBox.SelectionStart;
+
+                var builder = new StringBuilder();
+                builder.Append(oldText.Substring(0, selectionStart));
+                builder.AppendLine();
+                builder.Append(oldText.Substring(selectionStart + TypingTextBox.SelectionLength));
+                TypingTextBox.Text = builder.ToString();
+
+                TypingTextBox.SelectionStart = selectionStart + Environment.NewLine.Length;
+                TypingTextBox.SelectionLength = 0;
+            }
         }
 
-        private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            _sender.Send();
-        }
+        private void TypingTextBox_SelectionChanged(object sender, RoutedEventArgs e) => _sender.Send();
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -89,10 +91,7 @@ namespace Walterlv.CloudTyping
 
         private async void OnExceptionOccurred(object sender, ExceptionEventArgs e)
         {
-            await TypingTextBox.Dispatcher.InvokeAsync(() =>
-            {
-                ErrorTipTextBlock.Text = e.Exception.ToString();
-            });
+            await TypingTextBox.Dispatcher.InvokeAsync(() => { ErrorTipTextBlock.Text = e.Exception.ToString(); });
         }
 
         private void TokenTextBox_LostFocus(object sender, RoutedEventArgs e)
