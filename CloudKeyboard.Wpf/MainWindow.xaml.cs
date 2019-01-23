@@ -83,10 +83,7 @@ namespace Walterlv.CloudTyping
             }
         }
 
-        private void OnActivated(object sender, EventArgs e)
-        {
-            _sender.Reload();
-        }
+        private void OnActivated(object sender, EventArgs e) => _sender.Reload();
 
         private void OnTargetUpdated(object sender, TypingTextEventArgs e)
         {
@@ -96,10 +93,8 @@ namespace Walterlv.CloudTyping
             TypingTextBox.SelectionLength = typing.CaretEndIndex - typing.CaretStartIndex;
         }
 
-        private async void OnExceptionOccurred(object sender, ExceptionEventArgs e)
-        {
-            await TypingTextBox.Dispatcher.InvokeAsync(() => { ErrorTipTextBlock.Text = e.Exception.ToString(); });
-        }
+        private void OnExceptionOccurred(object sender, ExceptionEventArgs e)
+            => TypingTextBox.Dispatcher.InvokeAsync(() => ErrorTipTextBlock.Text = e.Exception.ToString());
 
         private void TokenTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
