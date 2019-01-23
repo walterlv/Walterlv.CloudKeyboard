@@ -17,6 +17,7 @@ namespace Walterlv.CloudTyping
         private int _receivedCount;
         private int _totalReceivedCount;
         private int _changedCount;
+        private CloudKeyboardReceiver _receiver;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -62,11 +63,14 @@ namespace Walterlv.CloudTyping
                 NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
 
             // 初始化打字。
-            var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
-            receiver.Typing += DidReceive;
-            receiver.Confirmed += DidConfirm;
-            receiver.ExceptionOccurred += ExceptionDidOccur;
-            receiver.Start();
+            if (_receiver == null)
+            {
+                var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
+                receiver.Typing += DidReceive;
+                receiver.Confirmed += DidConfirm;
+                receiver.ExceptionOccurred += ExceptionDidOccur;
+                receiver.Start();
+            }
         }
 
         public override void TextWillChange(IUITextInput textInput)
