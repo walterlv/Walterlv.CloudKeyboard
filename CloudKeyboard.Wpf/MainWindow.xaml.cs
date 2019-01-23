@@ -72,8 +72,15 @@ namespace Walterlv.CloudTyping
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            _sender.Send(true);
-            TypingTextBox.Text = "";
+            if (TypingTextBox.IsFocused)
+            {
+                _sender.Send(true);
+                TypingTextBox.Text = "";
+            }
+            else if (TokenTextBox.IsFocused)
+            {
+                TypingTextBox.Focus();
+            }
         }
 
         private void OnActivated(object sender, EventArgs e)
