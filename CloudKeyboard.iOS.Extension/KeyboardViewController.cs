@@ -110,7 +110,7 @@ namespace Walterlv.CloudTyping
             }
 
             TextDocumentProxy.InsertText(e.Typing.Text);
-            await Task.Delay(1);
+            await Task.Delay(100);
             TextDocumentProxy.InsertText("\n");
         }
 
