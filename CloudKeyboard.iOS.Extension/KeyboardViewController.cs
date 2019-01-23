@@ -18,6 +18,7 @@ namespace Walterlv.CloudTyping
         private int _totalReceivedCount;
         private int _changedCount;
         private CloudKeyboardReceiver _receiver;
+        private bool IsLoaded => _nextKeyboardButton != null;
 
         protected KeyboardViewController(IntPtr handle) : base(handle)
         {
@@ -124,6 +125,11 @@ namespace Walterlv.CloudTyping
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+
             _debugButton.SetTitle(e.Exception.ToString(), UIControlState.Normal);
             _debugButton.SizeToFit();
             _debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -136,7 +142,6 @@ namespace Walterlv.CloudTyping
 
             button.SetTitle(title, UIControlState.Normal);
             button.SizeToFit();
-            button.TranslatesAutoresizingMaskIntoConstraints = false;
 
             view.AddSubview(button);
 
@@ -151,9 +156,13 @@ namespace Walterlv.CloudTyping
 
         private void UpdateCounts()
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+
             _debugButton.SetTitle($"{_totalReceivedCount}-{_receivedCount}-{_changedCount}", UIControlState.Normal);
             _debugButton.SizeToFit();
-            _debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private string _lastText;
@@ -161,6 +170,11 @@ namespace Walterlv.CloudTyping
 
         private async void Input(string text)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+
             if (text == _lastText)
             {
                 return;
