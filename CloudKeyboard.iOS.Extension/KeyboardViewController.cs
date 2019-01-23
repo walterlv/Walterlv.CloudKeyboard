@@ -65,11 +65,11 @@ namespace Walterlv.CloudTyping
             // 初始化打字。
             if (_receiver == null)
             {
-                var receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
-                receiver.Typing += DidReceive;
-                receiver.Confirmed += DidConfirm;
-                receiver.ExceptionOccurred += ExceptionDidOccur;
-                receiver.Start();
+                _receiver = new CloudKeyboardReceiver(HostInfo.BaseUrl, token);
+                _receiver.Typing += DidReceive;
+                _receiver.Confirmed += DidConfirm;
+                _receiver.ExceptionOccurred += ExceptionDidOccur;
+                _receiver.Start();
             }
         }
 
