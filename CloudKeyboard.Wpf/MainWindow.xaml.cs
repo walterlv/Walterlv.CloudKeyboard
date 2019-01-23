@@ -120,13 +120,13 @@ namespace Walterlv.CloudTyping
         private void UpdateCharacterInputLeftInfo()
         {
             var characterInputLeft = TypingTextBox.MaxLength - TypingTextBox.Text.Length;
-            if (characterInputLeft <= 200)
-            {
-                WarningTextBlock.Text = $"你还可以再输入 {characterInputLeft.ToString()} 个字……";
-            }
-            else if (characterInputLeft <= 0)
+            if (characterInputLeft <= 0)
             {
                 WarningTextBlock.Text = "你输入的字已经够多了……";
+            }
+            else if (characterInputLeft <= 200)
+            {
+                WarningTextBlock.Text = $"你还可以再输入 {characterInputLeft.ToString()} 个字……";
             }
             else
             {

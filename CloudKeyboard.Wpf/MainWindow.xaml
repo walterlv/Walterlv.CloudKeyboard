@@ -142,12 +142,12 @@
         </Border>
         <Grid Grid.Row="2" Background="White" Focusable="False">
             <TextBlock x:Name="TipTextBlock" IsHitTestVisible="False"
-                       Margin="12 0" VerticalAlignment="Center"
+                       Margin="12 0" FontSize="13" VerticalAlignment="Center"
                        Text="按下 Enter 确认，按下 Ctrl+Enter 输入换行符。" />
-            <Border Background="White">
+            <Border Background="White"
+                    Visibility="{Binding Text, ElementName=WarningTextBlock, Converter={utils:EmptyStringToVisibilityConverter}}">
                 <TextBlock x:Name="WarningTextBlock" IsHitTestVisible="False"
-                           Foreground="#dd5145" Margin="12 0" VerticalAlignment="Center"
-                           Visibility="{Binding Text, ElementName=WarningTextBlock, Converter={utils:EmptyStringToVisibilityConverter}}"/>
+                           Foreground="#dd5145" Margin="12 0" FontSize="13" VerticalAlignment="Center" />
             </Border>
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
