@@ -101,16 +101,6 @@ namespace Walterlv.CloudTyping
                 _receiver.Confirmed += DidConfirm;
                 _receiver.ExceptionOccurred += ExceptionDidOccur;
             }
-
-            try
-            {
-                // 阻止屏幕黑屏。
-                UIApplication.SharedApplication.IdleTimerDisabled = true;
-            }
-            catch (Exception ex)
-            {
-                Debug(ex);
-            }
         }
 
         public override void ViewDidAppear(bool animated)
@@ -162,6 +152,16 @@ namespace Walterlv.CloudTyping
             _totalReceivedCount++;
 
             Input(e.Typing.Text);
+
+            try
+            {
+                // 阻止屏幕黑屏。
+                UIApplication.SharedApplication.IdleTimerDisabled = true;
+            }
+            catch (Exception ex)
+            {
+                Debug(ex);
+            }
 
             UpdateCounts();
         }
