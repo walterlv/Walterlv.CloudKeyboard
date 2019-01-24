@@ -28,7 +28,7 @@ namespace Walterlv.CloudTyping.Client
 
             try
             {
-                text = await _keyboard.FetchTextAsync();
+                text = await _keyboard.PeekTextAsync();
             }
             catch
             {
