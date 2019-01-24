@@ -14,6 +14,9 @@ namespace Walterlv.CloudTyping
         private UIButton _debugButton;
         private UIButton _tokenButton;
         private UIButton _returnButton;
+        private static int _staticLoadedCount;
+        private int _loadedCount;
+        private int _unloadedCount;
         private int _receivedCount;
         private int _totalReceivedCount;
         private int _changedCount;
@@ -75,10 +78,14 @@ namespace Walterlv.CloudTyping
 
             // 阻止屏幕黑屏。
             UIApplication.SharedApplication.IdleTimerDisabled = true;
+
+            _staticLoadedCount++;
+            _loadedCount++;
         }
 
         public override void ViewDidUnload()
         {
+            _unloadedCount++;
             _receiver?.Stop();
             base.ViewDidUnload();
         }
@@ -181,7 +188,7 @@ namespace Walterlv.CloudTyping
                 return;
             }
 
-            _debugButton.SetTitle($"{_totalReceivedCount}-{_receivedCount}-{_changedCount}", UIControlState.Normal);
+            _debugButton.SetTitle($"{_staticLoadedCount}-{_loadedCount}-{_unloadedCount} -- {_totalReceivedCount}-{_receivedCount}-{_changedCount}", UIControlState.Normal);
             _debugButton.SizeToFit();
         }
 
