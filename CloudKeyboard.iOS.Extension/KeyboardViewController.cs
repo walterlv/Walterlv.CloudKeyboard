@@ -16,7 +16,7 @@ namespace Walterlv.CloudTyping
         private UIButton _returnButton;
         private static int _staticLoadedCount;
         private int _loadedCount;
-        private int _unloadedCount;
+        private static int _unloadedCount;
         private int _receivedCount;
         private int _totalReceivedCount;
         private int _changedCount;
