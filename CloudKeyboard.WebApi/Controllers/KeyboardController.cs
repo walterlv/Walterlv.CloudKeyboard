@@ -97,8 +97,15 @@ namespace Walterlv.CloudTyping.Controllers
                 var lastValue = queue.LastOrDefault();
                 if (lastValue == null || lastValue.Enter)
                 {
-                    queue.Enqueue(value);
-                    return new TypingResponse(true, "A new text message has been created.");
+                    if (!string.IsNullOrEmpty(value.Text) || value.Enter)
+                    {
+                        queue.Enqueue(value);
+                        return new TypingResponse(true, "A new text message has been created.");
+                    }
+                    else
+                    {
+                        return new TypingResponse(true, "There is no need to update text message.");
+                    }
                 }
                 else
                 {
