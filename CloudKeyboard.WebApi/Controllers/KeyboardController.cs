@@ -35,10 +35,16 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet("{token}")]
         public ActionResult<TypingText> Get(string token)
         {
-            if (TypingTextRepo.TryGetValue(token, out var queue)
-                && queue.TryPeek(out var value))
+            if (TypingTextRepo.TryGetValue(token, out var queue))
             {
-                return value;
+                if (queue.TryPeek(out var value))
+                {
+                    return value;
+                }
+                else
+                {
+                    return NotFound(new TypingResponse(false, $"Token {token} has no texts."));
+                }
             }
 
             return NotFound(new TypingResponse(false, $"Token {token} not found."));
@@ -55,25 +61,28 @@ namespace Walterlv.CloudTyping.Controllers
         {
             if (TypingTextRepo.TryGetValue(token, out var queue))
             {
-                if (queue.TryPeek(out var value) && value.Enter)
+                if (queue.TryPeek(out var value))
                 {
-                    queue.TryDequeue(out _);
+                    if (value.Enter)
+                    {
+                        queue.TryDequeue(out _);
+                        return value;
+                    }
+                    else
+                    {
+                        return value;
+                    }
                 }
-
-                if (value == null)
+                else
                 {
-                    value = new TypingText("");
-                    queue.Enqueue(value);
+                    return new TypingText("");
                 }
-
-                return value;
             }
             else
             {
                 TypingTextRepo[token] = new ConcurrentQueue<TypingText>();
+                return new TypingText("");
             }
-
-            return new TypingText("");
         }
 
         // PUT api/keyboard/5
@@ -85,20 +94,22 @@ namespace Walterlv.CloudTyping.Controllers
         {
             if (TypingTextRepo.TryGetValue(token, out var queue))
             {
-                queue.TryPeek(out var originalValue);
-                if (!(originalValue?.Enter is false))
+                var lastValue = queue.LastOrDefault();
+                if (lastValue == null || lastValue.Enter)
                 {
                     queue.Enqueue(value);
                     return new TypingResponse(true, "A new text message has been created.");
                 }
                 else
                 {
-                    originalValue.UpdateFrom(value);
+                    lastValue.UpdateFrom(value);
                     return new TypingResponse(true, "The message has been updated.");
                 }
             }
-
-            return NotFound(new TypingResponse(false, $"Token {token} not found."));
+            else
+            {
+                return NotFound(new TypingResponse(false, $"Token {token} not found."));
+            }
         }
 
         // DELETE api/keyboard/5
