@@ -49,22 +49,49 @@ namespace Walterlv.CloudTyping
 
             var token = UIDevice.CurrentDevice.Name;
 
-            // 调试按钮
-            _debugButton = CreateButtonToView(View, "...",
-                NSLayoutAttribute.CenterX, NSLayoutAttribute.Top);
+            try
+            {
+                // 调试按钮
+                _debugButton = CreateButtonToView(View, "...",
+                    NSLayoutAttribute.CenterX, NSLayoutAttribute.Top);
+            }
+            catch (Exception ex)
+            {
+            }
 
-            // Token 按钮
-            _tokenButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
-                NSLayoutAttribute.CenterX, NSLayoutAttribute.CenterY);
-            
-            // 切换输入法按钮
-            _nextKeyboardButton = CreateButtonToView(View, "Next Keyboard",
-                NSLayoutAttribute.Left, NSLayoutAttribute.Bottom);
-            _nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
+            try
+            {
+                // Token 按钮
+                _tokenButton = CreateButtonToView(View, $"使用此文本设置你的 PC 键盘：{token}",
+                    NSLayoutAttribute.CenterX, NSLayoutAttribute.CenterY);
+            }
+            catch (Exception ex)
+            {
+                Debug(ex);
+            }
 
-            // 确认按钮
-            _returnButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
-                NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
+            try
+            {
+                // 切换输入法按钮
+                _nextKeyboardButton = CreateButtonToView(View, "Next Keyboard",
+                    NSLayoutAttribute.Left, NSLayoutAttribute.Bottom);
+                _nextKeyboardButton.AddTarget(this, new Selector("advanceToNextInputMode"), UIControlEvent.TouchUpInside);
+            }
+            catch (Exception ex)
+            {
+                Debug(ex);
+            }
+
+            try
+            {
+                // 确认按钮
+                _returnButton = CreateButtonToView(View, TextDocumentProxy.ReturnKeyType.ToString(),
+                    NSLayoutAttribute.Right, NSLayoutAttribute.Bottom);
+            }
+            catch (Exception ex)
+            {
+                Debug(ex);
+            }
 
             // 初始化打字。
             if (_receiver == null)
@@ -75,8 +102,15 @@ namespace Walterlv.CloudTyping
                 _receiver.ExceptionOccurred += ExceptionDidOccur;
             }
 
-            // 阻止屏幕黑屏。
-            UIApplication.SharedApplication.IdleTimerDisabled = true;
+            try
+            {
+                // 阻止屏幕黑屏。
+                UIApplication.SharedApplication.IdleTimerDisabled = true;
+            }
+            catch (Exception ex)
+            {
+                Debug(ex);
+            }
         }
 
         public override void ViewDidAppear(bool animated)
@@ -145,24 +179,7 @@ namespace Walterlv.CloudTyping
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
         {
-            if (!IsLoaded)
-            {
-                return;
-            }
-
-            string info;
-            if (e.Exception is NullReferenceException nre)
-            {
-                info = $"null:{nre.StackTrace}";
-            }
-            else
-            {
-                info = $"{e.Exception.GetType().Name.Replace("Exception", "")}:{e.Exception.StackTrace}";
-            }
-
-            _debugButton.SetTitle(info, UIControlState.Normal);
-            _debugButton.SizeToFit();
-            _debugButton.TranslatesAutoresizingMaskIntoConstraints = false;
+            Debug(e.Exception);
         }
 
         private UIButton CreateButtonToView(UIView view, string title,
@@ -187,13 +204,7 @@ namespace Walterlv.CloudTyping
 
         private void UpdateCounts()
         {
-            if (!IsLoaded)
-            {
-                return;
-            }
-
-            _debugButton.SetTitle($"{_staticLoadedCount}-{_loadedCount}-{_unloadedCount} -- {_totalReceivedCount}-{_receivedCount}-{_changedCount}", UIControlState.Normal);
-            _debugButton.SizeToFit();
+            Debug($"{_staticLoadedCount}-{_loadedCount}-{_unloadedCount} -- {_totalReceivedCount}-{_receivedCount}-{_changedCount}");
         }
 
         private string _lastText;
@@ -261,6 +272,32 @@ namespace Walterlv.CloudTyping
             }
 
             TextDocumentProxy.InsertText(text);
+        }
+
+        private void Debug(Exception exception)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+
+            string info;
+            if (exception is NullReferenceException nre)
+            {
+                info = $"null:{nre.StackTrace}";
+            }
+            else
+            {
+                info = $"{exception.GetType().Name.Replace("Exception", "")}:{exception.StackTrace}";
+            }
+
+            Debug(info);
+        }
+
+        private void Debug(string info)
+        {
+            _debugButton.SetTitle(info, UIControlState.Normal);
+            _debugButton.SizeToFit();
         }
     }
 }
