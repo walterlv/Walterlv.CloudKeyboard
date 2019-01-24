@@ -73,21 +73,25 @@ namespace Walterlv.CloudTyping
                 _receiver.Typing += DidReceive;
                 _receiver.Confirmed += DidConfirm;
                 _receiver.ExceptionOccurred += ExceptionDidOccur;
-                _receiver.Start();
             }
 
             // 阻止屏幕黑屏。
             UIApplication.SharedApplication.IdleTimerDisabled = true;
+        }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            _receiver?.Start();
             _staticLoadedCount++;
             _loadedCount++;
         }
 
-        public override void ViewDidUnload()
+        public override void ViewWillDisappear(bool animated)
         {
             _unloadedCount++;
             _receiver?.Stop();
-            base.ViewDidUnload();
+            base.ViewWillDisappear(animated);
         }
 
         public override void TextWillChange(IUITextInput textInput)
