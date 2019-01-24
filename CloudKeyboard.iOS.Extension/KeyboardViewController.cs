@@ -72,6 +72,9 @@ namespace Walterlv.CloudTyping
                 _receiver.ExceptionOccurred += ExceptionDidOccur;
                 _receiver.Start();
             }
+
+            // 阻止屏幕黑屏。
+            UIApplication.SharedApplication.IdleTimerDisabled = true;
         }
 
         public override void ViewDidUnload()
