@@ -98,15 +98,13 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 _context.Keyboards.Add(new Keyboard {Token = token});
                 _context.SaveChanges();
-                // await WaitForChangesAsync(token);
-                return new TypingText("");
+                return await WaitForChangesAsync(token) ?? new TypingText("");
             }
 
             var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
             if (value == null)
             {
-                // await WaitForChangesAsync(token);
-                return new TypingText("");
+                return await WaitForChangesAsync(token) ?? new TypingText("");
             }
 
             if (value.Enter)
@@ -115,13 +113,7 @@ namespace Walterlv.CloudTyping.Controllers
                 _context.SaveChanges();
             }
 
-            var hasWaited = await WaitForChangesAsync(token);
-            if (!hasWaited)
-            {
-                return value.AsClient();
-            }
-
-            return value.AsClient();
+            return await WaitForChangesAsync(token) ?? value.AsClient();
         }
 
         // PUT api/keyboard/5
@@ -144,8 +136,8 @@ namespace Walterlv.CloudTyping.Controllers
                 {
                     var typing = new Models.TypingText(token, value);
                     _context.Typings.Add(typing);
-                    PushChanges(token);
                     _context.SaveChanges();
+                    PushChanges(token);
                     return new TypingResponse(true, "A new text message has been created.");
                 }
                 else
@@ -195,15 +187,48 @@ namespace Walterlv.CloudTyping.Controllers
                 _context.Entry(change).State = EntityState.Modified;
             }
 
-            TypingAsyncTracker.From(token).PushChanges(change);
+            _context.SaveChanges();
+
+            TypingAsyncTracker.From(token).PushChanges(PostShort(token));
         }
 
-        private async Task<bool> WaitForChangesAsync(string token)
+        private async Task<TypingText> WaitForChangesAsync(string token)
         {
             var change = _context.Changes.Find(token);
             var version = change?.PopVersion ?? 0;
-            var hasWaited = await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
-            return hasWaited;
+            if (change != null)
+            {
+                _context.Entry(change).State = EntityState.Modified;
+            }
+
+            _context.SaveChanges();
+
+            return await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
+        }
+
+        private TypingText PostShort(string token)
+        {
+            var keyboard = _context.Keyboards.Find(token);
+            if (keyboard == null)
+            {
+                _context.Keyboards.Add(new Keyboard {Token = token});
+                _context.SaveChanges();
+                return new TypingText("");
+            }
+
+            var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
+            if (value == null)
+            {
+                return new TypingText("");
+            }
+
+            if (value.Enter)
+            {
+                _context.Typings.Remove(value);
+                _context.SaveChanges();
+            }
+
+            return value.AsClient();
         }
     }
 }

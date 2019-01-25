@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Walterlv.CloudTyping.Models;
 
 namespace Walterlv.CloudTyping
 {
@@ -9,30 +8,31 @@ namespace Walterlv.CloudTyping
     {
         private readonly string _token;
         private long _currentVersion;
-        private TaskCompletionSource<bool> _source;
+        private TaskCompletionSource<TypingText> _source;
 
         private TypingAsyncTracker(string token)
         {
             _token = token;
         }
 
-        public void PushChanges(TypingChange change)
+        public void PushChanges(TypingText typing)
         {
-            _source?.SetResult(true);
+            var source = _source;
             _source = null;
+            source?.SetResult(typing);
         }
 
-        public Task<bool> WaitForChangesAsync(long currentVersion, TimeSpan timeout)
+        public Task<TypingText> WaitForChangesAsync(long currentVersion, TimeSpan timeout)
         {
             if (currentVersion > _currentVersion)
             {
                 // 在请求时已经发生了更新，那么直接推送新的修改。
                 _currentVersion = currentVersion;
-                return Task.FromResult(false);
+                return Task.FromResult<TypingText>(null);
             }
             else
             {
-                _source = _source ?? new TaskCompletionSource<bool>();
+                _source = _source ?? new TaskCompletionSource<TypingText>();
                 return _source.Task;
             }
         }
