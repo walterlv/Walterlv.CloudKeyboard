@@ -1,8 +1,7 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using TypingRepo = System.Collections.Concurrent.ConcurrentDictionary<string, System.Collections.Concurrent.ConcurrentQueue<Walterlv.CloudTyping.TypingText>>;
+using Walterlv.CloudTyping.Models;
 
 namespace Walterlv.CloudTyping.Controllers
 {
@@ -10,10 +9,12 @@ namespace Walterlv.CloudTyping.Controllers
     [ApiController]
     public class KeyboardController : ControllerBase
     {
-        private static readonly TypingRepo TypingTextRepo = new TypingRepo(new Dictionary<string, string>
+        private readonly KeyboardContext _context;
+
+        public KeyboardController(KeyboardContext context)
         {
-            {"0", "Welcome to use walterlv's cloud keyboard."},
-        }.ToDictionary(x => x.Key, x => new ConcurrentQueue<TypingText>(new[] {new TypingText(x.Value)})));
+            _context = context;
+        }
 
         // GET api/keyboard
         /// <summary>
@@ -35,7 +36,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet("{token}")]
         public ActionResult<TypingText> Get(string token)
         {
-            if (TypingTextRepo.TryGetValue(token, out var queue))
+            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
             {
                 if (queue.TryPeek(out var value))
                 {
@@ -59,7 +60,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPost("{token}")]
         public ActionResult<TypingText> Post(string token)
         {
-            if (TypingTextRepo.TryGetValue(token, out var queue))
+            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
             {
                 if (queue.TryPeek(out var value))
                 {
@@ -80,7 +81,7 @@ namespace Walterlv.CloudTyping.Controllers
             }
             else
             {
-                TypingTextRepo[token] = new ConcurrentQueue<TypingText>();
+                _context.TypingTextRepo[token] = new ConcurrentQueue<TypingText>();
                 return new TypingText("");
             }
         }
@@ -92,7 +93,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPut("{token}")]
         public ActionResult<TypingResponse> Put(string token, [FromBody] TypingText value)
         {
-            if (TypingTextRepo.TryGetValue(token, out var queue))
+            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
             {
                 var lastValue = queue.LastOrDefault();
                 if (lastValue == null || lastValue.Enter)
@@ -126,7 +127,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpDelete("{token}")]
         public void Delete(string token)
         {
-            TypingTextRepo.TryRemove(token, out _);
+            _context.TypingTextRepo.TryRemove(token, out _);
         }
     }
 }
