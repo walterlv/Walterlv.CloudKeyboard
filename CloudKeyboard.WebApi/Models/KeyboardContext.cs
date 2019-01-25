@@ -12,6 +12,8 @@ namespace Walterlv.CloudTyping.Models
         {
         }
 
+        public DbSet<Keyboard> Keyboards { get; set; }
+
         public TypingRepo TypingTextRepo = new TypingRepo(new Dictionary<string, string>
         {
             {"0", "Welcome to use walterlv's cloud keyboard."},
