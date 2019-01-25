@@ -2,13 +2,13 @@
 
 namespace Walterlv.CloudTyping.Models
 {
-    public class KeyboardTyping
+    public class TypingText
     {
-        public KeyboardTyping()
+        public TypingText()
         {
         }
 
-        public KeyboardTyping(TypingText typing)
+        public TypingText(TypingText typing)
         {
             Text = typing.Text;
             CaretStartIndex = typing.CaretStartIndex;
