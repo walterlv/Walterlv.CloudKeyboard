@@ -61,30 +61,25 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPost("{token}")]
         public ActionResult<TypingText> Post(string token)
         {
-            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
+            var keyboard = _context.Keyboards.Find(token);
+            if (keyboard == null)
             {
-                if (queue.TryPeek(out var value))
-                {
-                    if (value.Enter)
-                    {
-                        queue.TryDequeue(out _);
-                        return value;
-                    }
-                    else
-                    {
-                        return value;
-                    }
-                }
-                else
-                {
-                    return new TypingText("");
-                }
-            }
-            else
-            {
-                _context.TypingTextRepo[token] = new ConcurrentQueue<TypingText>();
+                _context.Keyboards.Add(new Keyboard {Token = token});
                 return new TypingText("");
             }
+
+            var value = keyboard.Typings.FirstOrDefault();
+            if (value == null)
+            {
+                return new TypingText("");
+            }
+
+            if (value.Enter)
+            {
+                keyboard.Typings.RemoveAt(0);
+            }
+
+            return value.AsClient();
         }
 
         // PUT api/keyboard/5
