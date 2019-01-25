@@ -36,19 +36,20 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet("{token}")]
         public ActionResult<TypingText> Get(string token)
         {
-            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
+            var keyboard = _context.Keyboards.FirstOrDefault(x => x.Token == token);
+            if (keyboard == null)
             {
-                if (queue.TryPeek(out var value))
-                {
-                    return value;
-                }
-                else
-                {
-                    return NotFound(new TypingResponse(false, $"Token {token} has no texts."));
-                }
+                return NotFound(new TypingResponse(false, $"Token {token} not found."));
             }
 
-            return NotFound(new TypingResponse(false, $"Token {token} not found."));
+            var typing = keyboard.Typings.FirstOrDefault();
+
+            if (typing == null)
+            {
+                return NotFound(new TypingResponse(false, $"Token {token} has no texts."));
+            }
+
+            return typing.AsClient();
         }
 
         // GET api/keyboard/5
