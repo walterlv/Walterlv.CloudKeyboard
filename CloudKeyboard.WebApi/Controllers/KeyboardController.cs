@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Walterlv.CloudTyping.Models;
 
 namespace Walterlv.CloudTyping.Controllers
@@ -41,14 +42,14 @@ namespace Walterlv.CloudTyping.Controllers
                 return NotFound(new TypingResponse(false, $"Token {token} not found."));
             }
 
-            var typing = keyboard.Typings.FirstOrDefault();
+            var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
 
-            if (typing == null)
+            if (value == null)
             {
                 return NotFound(new TypingResponse(false, $"Token {token} has no texts."));
             }
 
-            return typing.AsClient();
+            return value.AsClient();
         }
 
         // GET api/keyboard/5
@@ -113,6 +114,7 @@ namespace Walterlv.CloudTyping.Controllers
             else
             {
                 lastValue.UpdateFrom(value);
+                _context.Entry(lastValue).State = EntityState.Modified;
                 _context.SaveChanges();
                 return new TypingResponse(true, "The message has been updated.");
             }
