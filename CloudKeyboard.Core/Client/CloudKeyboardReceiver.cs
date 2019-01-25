@@ -52,7 +52,7 @@ namespace Walterlv.CloudTyping.Client
                     ExceptionOccurred?.Invoke(this, new ExceptionEventArgs(ex));
                 }
 
-                await Task.Delay(500);
+                await Task.Delay(20);
             }
         }
 
