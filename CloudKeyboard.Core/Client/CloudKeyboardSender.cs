@@ -9,7 +9,7 @@ namespace Walterlv.CloudTyping.Client
         {
             _typingGetter = typingGetter;
             _baseUrl = baseUrl;
-            _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.2), SendCore);
+            _runner = new DelayRunner<TypingText>(TimeSpan.FromSeconds(0.1), SendCore);
             Token = token;
         }
 
