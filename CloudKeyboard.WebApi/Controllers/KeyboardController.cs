@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Walterlv.CloudTyping.Models;
@@ -10,6 +12,7 @@ namespace Walterlv.CloudTyping.Controllers
     public class KeyboardController : ControllerBase
     {
         private readonly KeyboardContext _context;
+        private static readonly TimeSpan DefaultPushTimeout = TimeSpan.FromSeconds(25);
 
         public KeyboardController(KeyboardContext context)
         {
@@ -88,19 +91,21 @@ namespace Walterlv.CloudTyping.Controllers
         /// 在获取此消息之后，如果此消息已经上屏，那么此条消息将会被删除，下次访问将返回新输入的一条消息。
         /// </summary>
         [HttpPost("{token}")]
-        public ActionResult<TypingText> Post(string token)
+        public async Task<ActionResult<TypingText>> Post(string token)
         {
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
                 _context.Keyboards.Add(new Keyboard {Token = token});
                 _context.SaveChanges();
+                // await WaitForChangesAsync(token);
                 return new TypingText("");
             }
 
             var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
             if (value == null)
             {
+                // await WaitForChangesAsync(token);
                 return new TypingText("");
             }
 
@@ -108,6 +113,12 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 _context.Typings.Remove(value);
                 _context.SaveChanges();
+            }
+
+            var hasWaited = await WaitForChangesAsync(token);
+            if (!hasWaited)
+            {
+                return value.AsClient();
             }
 
             return value.AsClient();
@@ -131,7 +142,9 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 if (!string.IsNullOrEmpty(value.Text) || value.Enter)
                 {
-                    _context.Typings.Add(new Models.TypingText(token, value));
+                    var typing = new Models.TypingText(token, value);
+                    _context.Typings.Add(typing);
+                    PushChanges(token);
                     _context.SaveChanges();
                     return new TypingResponse(true, "A new text message has been created.");
                 }
@@ -145,6 +158,7 @@ namespace Walterlv.CloudTyping.Controllers
                 lastValue.UpdateFrom(value);
                 _context.Entry(lastValue).State = EntityState.Modified;
                 _context.SaveChanges();
+                PushChanges(token);
                 return new TypingResponse(true, "The message has been updated.");
             }
         }
@@ -162,6 +176,34 @@ namespace Walterlv.CloudTyping.Controllers
                 _context.Keyboards.Remove(keyboard);
                 _context.Typings.RemoveRange(_context.Typings.Where(x => x.KeyboardToken == token).ToArray());
             }
+        }
+
+        /// <summary>
+        /// 指示指定 <paramref name="token"/> 的键盘发生了改变，可以推送。
+        /// </summary>
+        private void PushChanges(string token)
+        {
+            var change = _context.Changes.Find(token);
+            if (change == null)
+            {
+                change = new TypingChange {Token = token, PushVersion = 1};
+                _context.Changes.Add(change);
+            }
+            else
+            {
+                change.PushVersion++;
+                _context.Entry(change).State = EntityState.Modified;
+            }
+
+            TypingAsyncTracker.From(token).PushChanges(change);
+        }
+
+        private async Task<bool> WaitForChangesAsync(string token)
+        {
+            var change = _context.Changes.Find(token);
+            var version = change?.PopVersion ?? 0;
+            var hasWaited = await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
+            return hasWaited;
         }
     }
 }

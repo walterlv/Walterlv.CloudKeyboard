@@ -10,6 +10,7 @@ namespace Walterlv.CloudTyping.Models
 
         public DbSet<Keyboard> Keyboards { get; set; }
         public DbSet<TypingText> Typings { get; set; }
+        public DbSet<TypingChange> Changes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
