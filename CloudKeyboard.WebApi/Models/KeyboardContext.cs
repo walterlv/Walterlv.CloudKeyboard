@@ -10,7 +10,7 @@ namespace Walterlv.CloudTyping.Models
 {
     public class KeyboardContext : DbContext
     {
-        public KeyboardContext(DbContextOptions options) : base(options)
+        public KeyboardContext(DbContextOptions<KeyboardContext> options) : base(options)
         {
         }
 
