@@ -36,7 +36,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet("{token}")]
         public ActionResult<TypingText> Get(string token)
         {
-            var keyboard = _context.Keyboards.FirstOrDefault(x => x.Token == token);
+            var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
                 return NotFound(new TypingResponse(false, $"Token {token} not found."));
