@@ -64,10 +64,11 @@ namespace Walterlv.CloudTyping.Controllers
             if (keyboard == null)
             {
                 _context.Keyboards.Add(new Keyboard {Token = token});
+                _context.SaveChanges();
                 return new TypingText("");
             }
 
-            var value = keyboard.Typings.FirstOrDefault();
+            var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
             if (value == null)
             {
                 return new TypingText("");
@@ -75,7 +76,8 @@ namespace Walterlv.CloudTyping.Controllers
 
             if (value.Enter)
             {
-                keyboard.Typings.RemoveAt(0);
+                _context.Typings.Remove(value);
+                _context.SaveChanges();
             }
 
             return value.AsClient();
@@ -94,12 +96,13 @@ namespace Walterlv.CloudTyping.Controllers
                 return NotFound(new TypingResponse(false, $"Token {token} not found."));
             }
 
-            var lastValue = keyboard.Typings.LastOrDefault();
+            var lastValue = _context.Typings.LastOrDefault(x => x.KeyboardToken == token);
             if (lastValue == null || lastValue.Enter)
             {
                 if (!string.IsNullOrEmpty(value.Text) || value.Enter)
                 {
-                    keyboard.Typings.Add(value);
+                    _context.Typings.Add(new Models.TypingText(token, value));
+                    _context.SaveChanges();
                     return new TypingResponse(true, "A new text message has been created.");
                 }
                 else
@@ -110,6 +113,7 @@ namespace Walterlv.CloudTyping.Controllers
             else
             {
                 lastValue.UpdateFrom(value);
+                _context.SaveChanges();
                 return new TypingResponse(true, "The message has been updated.");
             }
         }
@@ -125,6 +129,7 @@ namespace Walterlv.CloudTyping.Controllers
             if (keyboard != null)
             {
                 _context.Keyboards.Remove(keyboard);
+                _context.Typings.RemoveRange(_context.Typings.Where(x => x.KeyboardToken == token).ToArray());
             }
         }
     }

@@ -7,10 +7,12 @@ namespace Walterlv.CloudTyping.Models
     {
         public TypingText()
         {
+            Timestamp = DateTimeOffset.UtcNow.UtcTicks;
         }
 
-        public TypingText(TypingText typing)
+        public TypingText(string keyboardToken, CloudTyping.TypingText typing) : this()
         {
+            KeyboardToken = keyboardToken;
             Text = typing.Text;
             CaretStartIndex = typing.CaretStartIndex;
             CaretEndIndex = typing.CaretEndIndex;
@@ -19,6 +21,9 @@ namespace Walterlv.CloudTyping.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [ForeignKey(nameof(Keyboard.Token))]
+        public string KeyboardToken { get; set; }
 
         public long Timestamp { get; set; }
         public string Text { get; set; }
@@ -29,18 +34,6 @@ namespace Walterlv.CloudTyping.Models
         public CloudTyping.TypingText AsClient()
         {
             return new CloudTyping.TypingText(Text, CaretStartIndex, CaretEndIndex, Enter);
-        }
-
-        public static implicit operator TypingText(CloudTyping.TypingText typing)
-        {
-            return new TypingText
-            {
-                Text = typing.Text,
-                CaretStartIndex = typing.CaretStartIndex,
-                CaretEndIndex = typing.CaretEndIndex,
-                Enter = typing.Enter,
-                Timestamp = DateTimeOffset.UtcNow.UtcTicks,
-            };
         }
 
         public void UpdateFrom(CloudTyping.TypingText value)

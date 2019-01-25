@@ -9,5 +9,12 @@ namespace Walterlv.CloudTyping.Models
         }
 
         public DbSet<Keyboard> Keyboards { get; set; }
+        public DbSet<TypingText> Typings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Keyboard>()
+                .HasMany(k => k.Typings);
+        }
     }
 }
