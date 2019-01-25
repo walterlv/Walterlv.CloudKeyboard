@@ -7,7 +7,7 @@ namespace Walterlv.CloudTyping.Models
     public class Keyboard
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Uid { get; set; }
+        public string Token { get; set; }
 
         public virtual List<TypingTextModel> Typings { get; set; }
     }
