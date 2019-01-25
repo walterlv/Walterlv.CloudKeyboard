@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Walterlv.CloudTyping.Models
 {
@@ -28,6 +29,26 @@ namespace Walterlv.CloudTyping.Models
         public CloudTyping.TypingText AsClient()
         {
             return new CloudTyping.TypingText(Text, CaretStartIndex, CaretEndIndex, Enter);
+        }
+
+        public static implicit operator TypingText(CloudTyping.TypingText typing)
+        {
+            return new TypingText
+            {
+                Text = typing.Text,
+                CaretStartIndex = typing.CaretStartIndex,
+                CaretEndIndex = typing.CaretEndIndex,
+                Enter = typing.Enter,
+                Timestamp = DateTimeOffset.UtcNow.UtcTicks,
+            };
+        }
+
+        public void UpdateFrom(CloudTyping.TypingText value)
+        {
+            Text = value.Text;
+            CaretStartIndex = value.CaretStartIndex;
+            CaretEndIndex = value.CaretEndIndex;
+            Enter = value.Enter;
         }
     }
 }

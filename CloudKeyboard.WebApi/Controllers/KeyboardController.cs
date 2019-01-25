@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Walterlv.CloudTyping.Models;
 
@@ -89,30 +88,29 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPut("{token}")]
         public ActionResult<TypingResponse> Put(string token, [FromBody] TypingText value)
         {
-            if (_context.TypingTextRepo.TryGetValue(token, out var queue))
+            var keyboard = _context.Keyboards.Find(token);
+            if (keyboard == null)
             {
-                var lastValue = queue.LastOrDefault();
-                if (lastValue == null || lastValue.Enter)
+                return NotFound(new TypingResponse(false, $"Token {token} not found."));
+            }
+
+            var lastValue = keyboard.Typings.LastOrDefault();
+            if (lastValue == null || lastValue.Enter)
+            {
+                if (!string.IsNullOrEmpty(value.Text) || value.Enter)
                 {
-                    if (!string.IsNullOrEmpty(value.Text) || value.Enter)
-                    {
-                        queue.Enqueue(value);
-                        return new TypingResponse(true, "A new text message has been created.");
-                    }
-                    else
-                    {
-                        return new TypingResponse(true, "There is no need to update text message.");
-                    }
+                    keyboard.Typings.Add(value);
+                    return new TypingResponse(true, "A new text message has been created.");
                 }
                 else
                 {
-                    lastValue.UpdateFrom(value);
-                    return new TypingResponse(true, "The message has been updated.");
+                    return new TypingResponse(true, "There is no need to update text message.");
                 }
             }
             else
             {
-                return NotFound(new TypingResponse(false, $"Token {token} not found."));
+                lastValue.UpdateFrom(value);
+                return new TypingResponse(true, "The message has been updated.");
             }
         }
 
@@ -123,7 +121,11 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpDelete("{token}")]
         public void Delete(string token)
         {
-            _context.TypingTextRepo.TryRemove(token, out _);
+            var keyboard = _context.Keyboards.Find(token);
+            if (keyboard != null)
+            {
+                _context.Keyboards.Remove(keyboard);
+            }
         }
     }
 }

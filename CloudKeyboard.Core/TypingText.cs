@@ -50,15 +50,6 @@ namespace Walterlv.CloudTyping
 
         public bool Enter { get; private set; }
 
-        public void UpdateFrom(TypingText value)
-        {
-            VerifyFreezing();
-            Text = value.Text;
-            CaretStartIndex = value.CaretStartIndex;
-            CaretEndIndex = value.CaretEndIndex;
-            Enter = value.Enter;
-        }
-
         public void Freeze()
         {
             Enter = true;
