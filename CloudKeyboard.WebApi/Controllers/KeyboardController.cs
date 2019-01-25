@@ -54,6 +54,35 @@ namespace Walterlv.CloudTyping.Controllers
 
         // GET api/keyboard/5
         /// <summary>
+        /// 获取指定 <paramref name="token"/> 下特定 <paramref name="typingId"/> 的文本。
+        /// 有可能这是一条早已用过的文本。
+        /// </summary>
+        [HttpGet("{token}/{typingId}")]
+        public ActionResult<TypingText> Get(string token, int typingId)
+        {
+            var keyboard = _context.Keyboards.Find(token);
+            if (keyboard == null)
+            {
+                return NotFound(new TypingResponse(false, $"Token {token} not found."));
+            }
+
+            var value = _context.Typings.Find(typingId);
+
+            if (value == null)
+            {
+                return NotFound(new TypingResponse(false, $"Text {typingId} not found."));
+            }
+
+            if (value.KeyboardToken != token)
+            {
+                return NotFound(new TypingResponse(false, $"Accessing to text {typingId} is denied."));
+            }
+
+            return value.AsClient();
+        }
+
+        // GET api/keyboard/5
+        /// <summary>
         /// 获取指定 <paramref name="token"/> 下正在输入的文本。
         /// 如果此 <paramref name="token"/> 不存在，将创建 Token。
         /// 在获取此消息之后，如果此消息已经上屏，那么此条消息将会被删除，下次访问将返回新输入的一条消息。
