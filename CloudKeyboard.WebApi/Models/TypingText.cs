@@ -19,6 +19,7 @@ namespace Walterlv.CloudTyping.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public long Timestamp { get; set; }
         public string Text { get; set; }
         public int CaretStartIndex { get; set; }
         public int CaretEndIndex { get; set; }
