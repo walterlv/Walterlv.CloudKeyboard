@@ -9,6 +9,6 @@ namespace Walterlv.CloudTyping.Models
         [Key]
         public string Token { get; set; }
 
-        public virtual List<TypingTextModel> Typings { get; set; }
+        public IList<TypingTextModel> Typings { get; set; }
     }
 }
