@@ -23,5 +23,10 @@ namespace Walterlv.CloudTyping.Models
         public int CaretStartIndex { get; set; }
         public int CaretEndIndex { get; set; }
         public bool Enter { get; set; }
+
+        public CloudTyping.TypingText AsClient()
+        {
+            return new CloudTyping.TypingText(Text, CaretStartIndex, CaretEndIndex, Enter);
+        }
     }
 }
