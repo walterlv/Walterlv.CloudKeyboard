@@ -97,6 +97,7 @@ namespace Walterlv.CloudTyping.Controllers
             if (keyboard == null)
             {
                 _context.Keyboards.Add(new Keyboard {Token = token});
+                _context.Changes.Add(new TypingChange {Token = token});
                 _context.SaveChanges();
                 return await WaitForChangesAsync(token) ?? new TypingText("");
             }
@@ -167,6 +168,7 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 _context.Keyboards.Remove(keyboard);
                 _context.Typings.RemoveRange(_context.Typings.Where(x => x.KeyboardToken == token).ToArray());
+                _context.Changes.RemoveRange(_context.Changes.Where(x => x.Token == token).ToArray());
             }
         }
 
@@ -176,34 +178,24 @@ namespace Walterlv.CloudTyping.Controllers
         private void PushChanges(string token)
         {
             var change = _context.Changes.Find(token);
-            if (change == null)
-            {
-                change = new TypingChange {Token = token, PushVersion = 1};
-                _context.Changes.Add(change);
-            }
-            else
-            {
-                change.PushVersion++;
-                _context.Entry(change).State = EntityState.Modified;
-            }
-
+            change.PushVersion++;
+            _context.Entry(change).State = EntityState.Modified;
             _context.SaveChanges();
 
-            TypingAsyncTracker.From(token).PushChanges(PostShort(token));
+            TypingAsyncTracker.From(token).PushChanges(change.PushVersion, PostShort(token));
         }
 
         private async Task<TypingText> WaitForChangesAsync(string token)
         {
             var change = _context.Changes.Find(token);
-            var version = change?.PopVersion ?? 0;
-            if (change != null)
-            {
-                _context.Entry(change).State = EntityState.Modified;
-            }
+            var version = change.PopVersion;
 
+            var (pop, typing) = await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
+            change.PopVersion = pop;
+            _context.Entry(change).State = EntityState.Modified;
             _context.SaveChanges();
 
-            return await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
+            return typing;
         }
 
         private TypingText PostShort(string token)
