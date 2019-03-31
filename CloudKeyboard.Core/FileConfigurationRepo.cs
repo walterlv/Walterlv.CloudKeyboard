@@ -8,6 +8,11 @@ namespace Walterlv.CloudTyping
         public static Dictionary<string, string> Deserialize(string fileName)
         {
             var keyValue = new Dictionary<string, string>();
+            if (!File.Exists(fileName))
+            {
+                return keyValue;
+            }
+
             var lines = File.ReadAllLines(fileName);
 
             string currentKey = null;
