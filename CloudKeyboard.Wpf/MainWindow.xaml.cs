@@ -12,11 +12,17 @@ namespace Walterlv.CloudTyping
     public partial class MainWindow : Window
     {
         private readonly CloudKeyboardSender _sender;
+        private readonly string _configFile;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
+            _configFile = File.Exists("configs.fkv")
+                ? "configs.fkv"
+                : Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "Walterlv.CloudKeyboard", "configs.fkv");
 
             var token = GetTokenFromConfigs();
             TokenTextBox.Text = token;
@@ -140,13 +146,13 @@ namespace Walterlv.CloudTyping
             }
         }
 
-        private static string GetTokenFromConfigs()
+        private string GetTokenFromConfigs()
         {
             string token;
 
             try
             {
-                token = FileConfigurationRepo.Deserialize(@"configs.fkv")["Token"];
+                token = FileConfigurationRepo.Deserialize(_configFile)["Token"];
             }
             catch
             {
@@ -158,7 +164,7 @@ namespace Walterlv.CloudTyping
 
         private void SetTokenToConfigs(string token)
         {
-            File.WriteAllText(@"configs.fkv", $@"Token
+            File.WriteAllText(_configFile, $@"Token
 {token}");
         }
     }
