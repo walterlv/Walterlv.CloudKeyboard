@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -101,7 +102,12 @@ namespace Walterlv.CloudTyping
         }
 
         private void OnExceptionOccurred(object sender, ExceptionEventArgs e)
-            => TypingTextBox.Dispatcher.InvokeAsync(() => ErrorTipTextBlock.Text = e.Exception.ToString());
+            => TypingTextBox.Dispatcher.InvokeAsync(async () =>
+            {
+                ErrorTipTextBlock.Text = e.Exception.ToString();
+                await Task.Delay(5000);
+                ErrorTipTextBlock.Text = "";
+            });
 
         private void TokenTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
