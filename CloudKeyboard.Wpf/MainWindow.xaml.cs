@@ -164,6 +164,15 @@ namespace Walterlv.CloudTyping
 
         private void SetTokenToConfigs(string token)
         {
+            if (!File.Exists(_configFile))
+            {
+                var name = Path.GetDirectoryName(_configFile);
+                if (name != null)
+                {
+                    Directory.CreateDirectory(name);
+                }
+            }
+
             File.WriteAllText(_configFile, $@"Token
 {token}");
         }
