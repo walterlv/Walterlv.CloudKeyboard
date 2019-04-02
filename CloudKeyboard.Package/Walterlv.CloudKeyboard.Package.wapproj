@@ -54,8 +54,9 @@
     <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <DefaultLanguage>zh-CN</DefaultLanguage>
-    <PackageCertificateKeyFile>Walterlv.CloudKeyboard.Package_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Walterlv.CloudKeyboard.Package_StoreKey.pfx</PackageCertificateKeyFile>
     <EntryPointProjectUniqueName>..\CloudKeyboard.Wpf\Walterlv.CloudKeyboard.Wpf.csproj</EntryPointProjectUniqueName>
+    <PackageCertificateThumbprint>4A6586663EC478A8EA474115B7B518755EE87EA6</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -110,6 +111,8 @@
     <Content Include="Images\Wide310x150Logo.scale-150.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
     <Content Include="Images\Wide310x150Logo.scale-400.png" />
+    <None Include="Walterlv.CloudKeyboard.Package_StoreKey.pfx" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CloudKeyboard.Wpf\Walterlv.CloudKeyboard.Wpf.csproj">
