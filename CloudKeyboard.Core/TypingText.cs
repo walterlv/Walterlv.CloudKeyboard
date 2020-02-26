@@ -9,6 +9,10 @@ namespace Walterlv.CloudTyping
         private int _caretStartIndex;
         private int _caretEndIndex;
 
+        public TypingText()
+        {
+        }
+
         [JsonConstructor]
         public TypingText(string text, int caretStartIndex = -1, int caretEndIndex = -1, bool enter = false)
         {
