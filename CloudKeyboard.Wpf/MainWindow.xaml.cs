@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,11 +12,17 @@ namespace Walterlv.CloudTyping
     public partial class MainWindow : Window
     {
         private readonly CloudKeyboardSender _sender;
+        private readonly string _configFile;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
+            _configFile = File.Exists("configs.fkv")
+                ? "configs.fkv"
+                : Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "Walterlv.CloudKeyboard", "configs.fkv");
 
             var token = GetTokenFromConfigs();
             TokenTextBox.Text = token;
@@ -101,7 +108,12 @@ namespace Walterlv.CloudTyping
         }
 
         private void OnExceptionOccurred(object sender, ExceptionEventArgs e)
-            => TypingTextBox.Dispatcher.InvokeAsync(() => ErrorTipTextBlock.Text = e.Exception.ToString());
+            => TypingTextBox.Dispatcher.InvokeAsync(async () =>
+            {
+                ErrorTipTextBlock.Text = e.Exception.ToString();
+                await Task.Delay(5000);
+                ErrorTipTextBlock.Text = "";
+            });
 
         private void TokenTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -134,13 +146,13 @@ namespace Walterlv.CloudTyping
             }
         }
 
-        private static string GetTokenFromConfigs()
+        private string GetTokenFromConfigs()
         {
             string token;
 
             try
             {
-                token = FileConfigurationRepo.Deserialize(@"configs.fkv")["Token"];
+                token = FileConfigurationRepo.Deserialize(_configFile)["Token"];
             }
             catch
             {
@@ -152,7 +164,16 @@ namespace Walterlv.CloudTyping
 
         private void SetTokenToConfigs(string token)
         {
-            File.WriteAllText(@"configs.fkv", $@"Token
+            if (!File.Exists(_configFile))
+            {
+                var name = Path.GetDirectoryName(_configFile);
+                if (name != null)
+                {
+                    Directory.CreateDirectory(name);
+                }
+            }
+
+            File.WriteAllText(_configFile, $@"Token
 {token}");
         }
     }

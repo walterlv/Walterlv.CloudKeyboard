@@ -1,30 +1,30 @@
-{
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:65129",
+      "applicationUrl": "http://localhost:55315",
       "sslPort": 0
     }
   },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/keyboard/0",
+      "launchUrl": "api/keyboard",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Walterlv.CloudKeyboard.WebApi": {
+    "CloudKeyboard.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/keyboard/0",
+      "launchUrl": "api/keyboard",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      }
     }
   }
 }

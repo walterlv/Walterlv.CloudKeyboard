@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Walterlv.CloudTyping.Models;
@@ -12,7 +10,6 @@ namespace Walterlv.CloudTyping.Controllers
     public class KeyboardController : ControllerBase
     {
         private readonly KeyboardContext _context;
-        private static readonly TimeSpan DefaultPushTimeout = TimeSpan.FromSeconds(25);
 
         public KeyboardController(KeyboardContext context)
         {
@@ -91,21 +88,20 @@ namespace Walterlv.CloudTyping.Controllers
         /// 在获取此消息之后，如果此消息已经上屏，那么此条消息将会被删除，下次访问将返回新输入的一条消息。
         /// </summary>
         [HttpPost("{token}")]
-        public async Task<ActionResult<TypingText>> Post(string token)
+        public ActionResult<TypingText> Post(string token)
         {
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
-                _context.Keyboards.Add(new Keyboard {Token = token});
-                _context.Changes.Add(new TypingChange {Token = token});
+                _context.Keyboards.Add(new Keyboard { Token = token });
                 _context.SaveChanges();
-                return await WaitForChangesAsync(token) ?? new TypingText("");
+                return new TypingText("");
             }
 
             var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
             if (value == null)
             {
-                return await WaitForChangesAsync(token) ?? new TypingText("");
+                return new TypingText("");
             }
 
             if (value.Enter)
@@ -114,7 +110,7 @@ namespace Walterlv.CloudTyping.Controllers
                 _context.SaveChanges();
             }
 
-            return await WaitForChangesAsync(token) ?? value.AsClient();
+            return value.AsClient();
         }
 
         // PUT api/keyboard/5
@@ -135,10 +131,8 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 if (!string.IsNullOrEmpty(value.Text) || value.Enter)
                 {
-                    var typing = new Models.TypingText(token, value);
-                    _context.Typings.Add(typing);
+                    _context.Typings.Add(new Models.TypingText(token, value));
                     _context.SaveChanges();
-                    PushChanges(token);
                     return new TypingResponse(true, "A new text message has been created.");
                 }
                 else
@@ -151,7 +145,6 @@ namespace Walterlv.CloudTyping.Controllers
                 lastValue.UpdateFrom(value);
                 _context.Entry(lastValue).State = EntityState.Modified;
                 _context.SaveChanges();
-                PushChanges(token);
                 return new TypingResponse(true, "The message has been updated.");
             }
         }
@@ -168,59 +161,7 @@ namespace Walterlv.CloudTyping.Controllers
             {
                 _context.Keyboards.Remove(keyboard);
                 _context.Typings.RemoveRange(_context.Typings.Where(x => x.KeyboardToken == token).ToArray());
-                _context.Changes.RemoveRange(_context.Changes.Where(x => x.Token == token).ToArray());
             }
-        }
-
-        /// <summary>
-        /// 指示指定 <paramref name="token"/> 的键盘发生了改变，可以推送。
-        /// </summary>
-        private void PushChanges(string token)
-        {
-            var change = _context.Changes.Find(token);
-            change.PushVersion++;
-            _context.Entry(change).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            TypingAsyncTracker.From(token).PushChanges(change.PushVersion, PostShort(token));
-        }
-
-        private async Task<TypingText> WaitForChangesAsync(string token)
-        {
-            var change = _context.Changes.Find(token);
-            var version = change.PopVersion;
-
-            var (pop, typing) = await TypingAsyncTracker.From(token).WaitForChangesAsync(version, DefaultPushTimeout);
-            change.PopVersion = pop;
-            _context.Entry(change).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return typing;
-        }
-
-        private TypingText PostShort(string token)
-        {
-            var keyboard = _context.Keyboards.Find(token);
-            if (keyboard == null)
-            {
-                _context.Keyboards.Add(new Keyboard {Token = token});
-                _context.SaveChanges();
-                return new TypingText("");
-            }
-
-            var value = _context.Typings.FirstOrDefault(x => x.KeyboardToken == token);
-            if (value == null)
-            {
-                return new TypingText("");
-            }
-
-            if (value.Enter)
-            {
-                _context.Typings.Remove(value);
-                _context.SaveChanges();
-            }
-
-            return value.AsClient();
         }
     }
 }

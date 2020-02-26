@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:themes="clr-namespace:Walterlv.CloudTyping.Themes"
         xmlns:utils="clr-namespace:Walterlv.CloudTyping.Utils"
-        xmlns:effects="clr-namespace:Walterlv.CloudTyping.Effects"
+        xmlns:themes="clr-namespace:Walterlv.Windows.Themes"
+        xmlns:effects="clr-namespace:Walterlv.Windows.Effects"
         mc:Ignorable="d"
-        Title="Walterlv CloudKeyboard"
+        Title="云键盘 - walterlv"
         Height="450" Width="800" MinWidth="500" MinHeight="320"
         Activated="OnActivated"
         Style="{StaticResource Style.Window.Universal}"
@@ -152,7 +152,8 @@
             <Button x:Name="EnterButton" MinWidth="120" Height="32"
                     Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Content="确认" Click="EnterButton_Click"
-                    Focusable="False" IsDefault="True" BorderThickness="2">
+                    Focusable="False" IsDefault="True" BorderThickness="2"
+                    effects:TiltEffect2D.IsEnabled="True">
                 <Button.BorderBrush>
                     <effects:RevealBorderBrush Color="#FF88CAF1" />
                 </Button.BorderBrush>
