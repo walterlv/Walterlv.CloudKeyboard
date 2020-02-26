@@ -1,21 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
-        <UseWPF>true</UseWPF>
-        <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
-        <StartupObject>Walterlv.CloudTyping.Program</StartupObject>
-        <RootNamespace>Walterlv.CloudTyping</RootNamespace>
-        <AssemblyName>Walterlv.CloudKeyboard</AssemblyName>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>Latest</LangVersion>
+    <UseWPF>true</UseWPF>
+    <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
+    <StartupObject>Walterlv.CloudTyping.Program</StartupObject>
+    <RootNamespace>Walterlv.CloudTyping</RootNamespace>
+    <AssemblyName>Walterlv.CloudKeyboard</AssemblyName>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudKeyboard.Core\Walterlv.CloudKeyboard.Core.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Properties\" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Walterlv.Themes.FluentDesign.Source" Version="0.15.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>
