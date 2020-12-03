@@ -52,7 +52,7 @@ namespace Walterlv.CloudTyping
             }
         }
 
-        public bool Enter { get; private set; }
+        public bool Enter { get; set; }
 
         public void Freeze()
         {
