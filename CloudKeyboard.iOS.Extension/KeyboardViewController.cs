@@ -128,44 +128,50 @@ namespace Walterlv.CloudTyping
             // The app has just changed the document's contents, the document context has been updated.
             UIColor textColor = null;
 
-            if (TextDocumentProxy.KeyboardAppearance == UIKeyboardAppearance.Dark)
+            try
             {
-                textColor = UIColor.White;
+                if (TextDocumentProxy.KeyboardAppearance == UIKeyboardAppearance.Dark)
+                {
+                    textColor = UIColor.White;
+                }
+                else
+                {
+                    textColor = UIColor.Black;
+                }
+
+                _nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
+                _tokenButton.SetTitleColor(textColor, UIControlState.Normal);
+                _debugButton.SetTitleColor(textColor, UIControlState.Normal);
+
+                _returnButton.SetTitle(TextDocumentProxy.ReturnKeyType.ToString(), UIControlState.Normal);
+                _returnButton.SizeToFit();
+                _returnButton.TranslatesAutoresizingMaskIntoConstraints = false;
             }
-            else
+            catch (Exception e)
             {
-                textColor = UIColor.Black;
+                Debug(e);
             }
-
-            _nextKeyboardButton.SetTitleColor(textColor, UIControlState.Normal);
-            _tokenButton.SetTitleColor(textColor, UIControlState.Normal);
-            _debugButton.SetTitleColor(textColor, UIControlState.Normal);
-
-            _returnButton.SetTitle(TextDocumentProxy.ReturnKeyType.ToString(), UIControlState.Normal);
-            _returnButton.SizeToFit();
-            _returnButton.TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private void DidReceive(object sender, TypingTextEventArgs e)
         {
-            BeginInvokeOnMainThread(() => 
+            BeginInvokeOnMainThread(() =>
             {
-                _receivedCount++;
-                _totalReceivedCount++;
-
-                Input(e.Typing.Text);
-
                 try
                 {
+                    _receivedCount++;
+                    _totalReceivedCount++;
+
+                    Input(e.Typing.Text);
+
                     // 阻止屏幕黑屏 https://github.com/walterlv/Walterlv.CloudKeyboard/issues/3
                     UIApplication.SharedApplication.IdleTimerDisabled = true;
+                    UpdateCounts();
                 }
                 catch (Exception ex)
                 {
                     Debug(ex);
                 }
-
-                UpdateCounts();
             });
         }
 
@@ -173,13 +179,20 @@ namespace Walterlv.CloudTyping
         {
             BeginInvokeOnMainThread(() =>
             {
-                _receivedCount = 0;
-                _totalReceivedCount++;
+                try
+                {
+                    _receivedCount = 0;
+                    _totalReceivedCount++;
 
-                Input(e.Typing.Text);
-                Input("\n");
+                    Input(e.Typing.Text);
+                    Input("\n");
 
-                UpdateCounts();
+                    UpdateCounts();
+                }
+                catch (Exception ex)
+                {
+                    Debug(ex);
+                }
             });
         }
 
@@ -218,7 +231,17 @@ namespace Walterlv.CloudTyping
 
         private void Input(string text)
         {
-            BeginInvokeOnMainThread(InputInner);
+            BeginInvokeOnMainThread(()=>
+            {
+                try
+                {
+                    InputInner();
+                }
+                catch (Exception ex)
+                {
+                    Debug(ex);
+                }
+            });
 
             async void InputInner()
             {
@@ -280,13 +303,20 @@ namespace Walterlv.CloudTyping
 
             void SetTextInner()
             {
-                _changedCount++;
-                while (TextDocumentProxy.HasText)
+                try
                 {
-                    TextDocumentProxy.DeleteBackward();
-                }
+                    _changedCount++;
+                    while (TextDocumentProxy.HasText)
+                    {
+                        TextDocumentProxy.DeleteBackward();
+                    }
 
-                TextDocumentProxy.InsertText(text);
+                    TextDocumentProxy.InsertText(text);
+                }
+                catch (Exception ex)
+                {
+                    Debug(ex);
+                }
             }
         }
 
