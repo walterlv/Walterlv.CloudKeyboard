@@ -148,33 +148,39 @@ namespace Walterlv.CloudTyping
 
         private void DidReceive(object sender, TypingTextEventArgs e)
         {
-            _receivedCount++;
-            _totalReceivedCount++;
-
-            Input(e.Typing.Text);
-
-            try
+            BeginInvokeOnMainThread(() => 
             {
-                // 阻止屏幕黑屏。
-                UIApplication.SharedApplication.IdleTimerDisabled = true;
-            }
-            catch (Exception ex)
-            {
-                Debug(ex);
-            }
+                _receivedCount++;
+                _totalReceivedCount++;
 
-            UpdateCounts();
+                Input(e.Typing.Text);
+
+                try
+                {
+                    // 阻止屏幕黑屏 https://github.com/walterlv/Walterlv.CloudKeyboard/issues/3
+                    UIApplication.SharedApplication.IdleTimerDisabled = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug(ex);
+                }
+
+                UpdateCounts();
+            });
         }
 
         private void DidConfirm(object sender, TypingTextEventArgs e)
         {
-            _receivedCount = 0;
-            _totalReceivedCount++;
+            BeginInvokeOnMainThread(() =>
+            {
+                _receivedCount = 0;
+                _totalReceivedCount++;
 
-            Input(e.Typing.Text);
-            Input("\n");
+                Input(e.Typing.Text);
+                Input("\n");
 
-            UpdateCounts();
+                UpdateCounts();
+            });
         }
 
         private void ExceptionDidOccur(object sender, ExceptionEventArgs e)
@@ -197,7 +203,7 @@ namespace Walterlv.CloudTyping
                 horizontalAlignment, NSLayoutRelation.Equal, view, horizontalAlignment, 1.0f, 0.0f);
             var okButtonCenterYConstraint = NSLayoutConstraint.Create(button,
                 verticalAlignment, NSLayoutRelation.Equal, view, verticalAlignment, 1.0f, 0.0f);
-            view.AddConstraints(new[] {okButtonCenterXConstraint, okButtonCenterYConstraint});
+            view.AddConstraints(new[] { okButtonCenterXConstraint, okButtonCenterYConstraint });
 
             return button;
         }
@@ -210,68 +216,78 @@ namespace Walterlv.CloudTyping
         private string _lastText;
         private readonly Queue<string> _inputingTexts = new Queue<string>();
 
-        private async void Input(string text)
+        private void Input(string text)
         {
-            if (!IsLoaded)
-            {
-                return;
-            }
+            BeginInvokeOnMainThread(InputInner);
 
-            if (text == _lastText)
+            async void InputInner()
             {
-                return;
-            }
-                
-            _lastText = text;
+                if (!IsLoaded)
+                {
+                    return;
+                }
 
-            if (_inputingTexts.Any())
-            {
-                _inputingTexts.Enqueue(text);
-                return;
-            }
+                if (text == _lastText)
+                {
+                    return;
+                }
 
-            _inputingTexts.Enqueue(text);
+                _lastText = text;
 
-            while (_inputingTexts.Any())
-            {
-                var current = _inputingTexts.Dequeue();
                 if (_inputingTexts.Any())
                 {
-                    var next = _inputingTexts.Peek();
-                    if (current == "\n")
+                    _inputingTexts.Enqueue(text);
+                    return;
+                }
+
+                _inputingTexts.Enqueue(text);
+
+                while (_inputingTexts.Any())
+                {
+                    var current = _inputingTexts.Dequeue();
+                    if (_inputingTexts.Any())
                     {
-                        TextDocumentProxy.InsertText("\n");
-                        await Task.Delay(100);
+                        var next = _inputingTexts.Peek();
+                        if (current == "\n")
+                        {
+                            TextDocumentProxy.InsertText("\n");
+                            await Task.Delay(100);
+                        }
+                        else if (next == "\n")
+                        {
+                            SetText(current);
+                            await Task.Delay(100);
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
-                    else if (next == "\n")
+                    else
                     {
                         SetText(current);
                         await Task.Delay(100);
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
-                else
-                {
-                    SetText(current);
-                    await Task.Delay(100);
-                }
-            }
 
-            UpdateCounts();
+                UpdateCounts();
+            }
         }
 
         private void SetText(string text)
         {
-            _changedCount++;
-            while (TextDocumentProxy.HasText)
-            {
-                TextDocumentProxy.DeleteBackward();
-            }
+            BeginInvokeOnMainThread(SetTextInner);
 
-            TextDocumentProxy.InsertText(text);
+            void SetTextInner()
+            {
+                _changedCount++;
+                while (TextDocumentProxy.HasText)
+                {
+                    TextDocumentProxy.DeleteBackward();
+                }
+
+                TextDocumentProxy.InsertText(text);
+            }
         }
 
         private void Debug(Exception exception)
@@ -296,8 +312,11 @@ namespace Walterlv.CloudTyping
 
         private void Debug(string info)
         {
-            _debugButton.SetTitle(info, UIControlState.Normal);
-            _debugButton.SizeToFit();
+            BeginInvokeOnMainThread(() =>
+            {
+                _debugButton.SetTitle(info, UIControlState.Normal);
+                _debugButton.SizeToFit();
+            });
         }
     }
 }
