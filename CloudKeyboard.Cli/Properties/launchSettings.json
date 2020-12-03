@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "模拟移动键盘端": {
+      "commandName": "Project",
+      "commandLineArgs": "mobile"
+    },
+    "模拟 PC 输入端": {
+      "commandName": "Project",
+      "commandLineArgs": "pc"
+    }
+  }
+}

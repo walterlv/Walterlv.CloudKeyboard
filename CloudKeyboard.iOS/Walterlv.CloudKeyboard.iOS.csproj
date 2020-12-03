@@ -156,6 +156,7 @@
       <IsAppExtension>true</IsAppExtension>
       <Project>{F70F519C-49D8-4178-B05B-C4A0391D7C91}</Project>
       <Name>Walterlv.CloudKeyboard.iOS.Extension</Name>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\CloudKeyboard.Xaml\Walterlv.CloudKeyboard.Xaml.csproj">
       <Project>{a2182b4a-a700-47be-8905-65e8c258b87e}</Project>
