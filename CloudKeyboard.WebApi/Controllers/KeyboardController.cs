@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Walterlv.CloudTyping.Models;
 
 namespace Walterlv.CloudTyping.Controllers
@@ -10,10 +11,12 @@ namespace Walterlv.CloudTyping.Controllers
     public class KeyboardController : ControllerBase
     {
         private readonly KeyboardContext _context;
+        private readonly ILogger _logger;
 
-        public KeyboardController(KeyboardContext context)
+        public KeyboardController(KeyboardContext context, ILogger<KeyboardController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET api/keyboard
@@ -23,6 +26,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet]
         public ActionResult<TypingText> Get()
         {
+            _logger.LogInformation("Get");
             return Get("0");
         }
 
@@ -36,6 +40,7 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpGet("{token}")]
         public ActionResult<TypingText> Get(string token)
         {
+            _logger.LogInformation("Get Token={0}", token);
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
@@ -63,7 +68,7 @@ namespace Walterlv.CloudTyping.Controllers
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
-                return NotFound(new TypingResponse(false, $"Token {token} not found."));
+                return NotFound(new TypingResponse(false, $"Token {token} not found. CurrentToken={string.Join(";", _context.Keyboards.Select(temp => temp.Token))}"));
             }
 
             var value = _context.Typings.Find(typingId);
@@ -90,6 +95,8 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPost("{token}")]
         public ActionResult<TypingText> Post(string token)
         {
+            _logger.LogInformation("Post token={0}", token);
+
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
@@ -120,6 +127,8 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpPut("{token}")]
         public ActionResult<TypingResponse> Put(string token, [FromBody] TypingText value)
         {
+            _logger.LogInformation("Put token={0} TypingText={1} Enter={2}", token, value.Text, value.Enter);
+
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard == null)
             {
@@ -156,6 +165,8 @@ namespace Walterlv.CloudTyping.Controllers
         [HttpDelete("{token}")]
         public void Delete(string token)
         {
+            _logger.LogInformation("Delete Token={0}", token);
+
             var keyboard = _context.Keyboards.Find(token);
             if (keyboard != null)
             {
