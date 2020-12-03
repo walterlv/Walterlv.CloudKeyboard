@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWpf>true</UseWpf>
+    <StartupObject>Walterlv.CloudTyping.Program</StartupObject>
+    <RootNamespace>Walterlv.CloudTyping</RootNamespace>
+    <AssemblyName>Walterlv.CloudKeyboard</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotnetCampus.Configurations" Version="1.5.3" />
+    <PackageReference Include="Walterlv.Themes.FluentDesign" Version="5.10.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CloudKeyboard.Core\CloudKeyboard.Core.csproj" />
+  </ItemGroup>
+
+</Project>
